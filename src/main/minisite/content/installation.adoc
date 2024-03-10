@@ -1,5 +1,5 @@
 = HCMS Installation
-:minisite-breadcrumb: Home[/] > Getting Started[getting-started.html] > Installation
+:minisite-breadcrumb: Home[/hcms/] > Getting Started[getting-started.html] > Installation
 :minisite-nav-prev-label: Getting Started
 :minisite-nav-next-label: Configuration
 

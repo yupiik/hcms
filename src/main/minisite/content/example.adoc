@@ -1,6 +1,6 @@
 = Example
 :minisite-keywords: hcms, model, example
-:minisite-breadcrumb: Home[/] > Example
+:minisite-breadcrumb: Home[/hcms/] > Example
 :minisite-nav-prev-label: Model
 :minisite-nav-next-label: Deployment
 

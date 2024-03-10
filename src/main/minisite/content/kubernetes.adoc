@@ -1,6 +1,6 @@
 = Kubernetes
 :minisite-keywords: hcms, Kubernetes
-:minisite-breadcrumb: Home[/] > Deployment[deployment.html] > Kubernetes
+:minisite-breadcrumb: Home[/hcms/] > Deployment[deployment.html] > Kubernetes
 :minisite-nav-prev-label: Deployment
 :minisite-nav-next-label: Kubernetes
 

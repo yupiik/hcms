@@ -1,6 +1,6 @@
 = Model Configuration
 :minisite-keywords: hcms, model, entities, JSON-RPC
-:minisite-breadcrumb: Home[/] > Model
+:minisite-breadcrumb: Home[/hcms/] > Model
 :minisite-nav-prev-label: JSON-RPC
 :minisite-nav-next-label: Example
 

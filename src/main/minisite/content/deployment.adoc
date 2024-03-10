@@ -4,7 +4,7 @@
 :minisite-index-description: Deploy.
 :minisite-index-icon: fas fa-space-shuttle
 :minisite-keywords: configuration, json-rpc, documentation
-:minisite-breadcrumb: Home[/] > Deployment
+:minisite-breadcrumb: Home[/hcms/] > Deployment
 :minisite-nav-prev-label: Example
 :minisite-nav-next-label: Kubernetes
 

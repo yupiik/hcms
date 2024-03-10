@@ -254,11 +254,11 @@
         <artifactId>yupiik-tools-maven-plugin</artifactId>
         <version>${yupiik-tools.version}</version>
         <configuration>
-          <siteBase>https://${project.groupId}.github.io/${project.artifactId}</siteBase>
+          <siteBase>https://www.yupiik.io/hcms</siteBase>
           <logoText>HCMS</logoText>
           <indexText>HCMS</indexText>
           <copyright>Yupiik HCMS</copyright>
-          <indexSubTitle>Simple and powerful headeless CMS.</indexSubTitle>
+          <indexSubTitle>Simple and powerful headless CMS.</indexSubTitle>
           <preferYupiikAsciidoc>true</preferYupiikAsciidoc>
           <preActions>
             <preAction>
@@ -759,7 +759,7 @@
                 <goals>
                   <goal>minisite</goal>
                 </goals>
-                <phase>prepare-package</phase>
+                <phase>package</phase>
                 <configuration>
                   <git>
                     <ignore>false</ignore>

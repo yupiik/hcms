@@ -4,7 +4,7 @@
 :minisite-index-description: Application Configuration.
 :minisite-index-icon: code
 :minisite-keywords: configuration, json-rpc, documentation
-:minisite-breadcrumb: Home[/] > Configuration
+:minisite-breadcrumb: Home[/hcms/] > Configuration
 :minisite-nav-prev-label: Installation
 :minisite-nav-next-label: JSON-RPC
 
