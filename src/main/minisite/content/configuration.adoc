@@ -1,0 +1,17 @@
+= Configuration
+:minisite-index: 300
+:minisite-index-title: Configuration
+:minisite-index-description: Application Configuration.
+:minisite-index-icon: code
+:minisite-keywords: configuration, json-rpc, documentation
+:minisite-breadcrumb: Home[/] > Configuration
+:minisite-nav-prev-label: Installation
+:minisite-nav-next-label: JSON-RPC
+
+This page is about HCMS setup, if you are looking for the API configuration, please have a look to xref:model.adoc[model] documentation.
+
+Here is the application configuration:
+
+include::{partialsdir}/generated/documentation.hcms.adoc[]
+
+

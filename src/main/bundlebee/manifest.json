@@ -1,0 +1,29 @@
+{
+  "alveoli": [
+    {
+      "name": "hcms",
+      "dependencies": [
+        {
+          "name": "hcms-jsonrpc-server"
+        }
+      ]
+    },
+    {
+      "name": "hcms-jsonrpc-server",
+      "descriptors": [
+        {
+          "name": "io.yupiik.hcms/hcms/jsonrpc-server/configmap.json",
+          "interpolate": true
+        },
+        {
+          "name": "io.yupiik.hcms/hcms/jsonrpc-server/deployment.json",
+          "interpolate": true
+        },
+        {
+          "name": "io.yupiik.hcms/hcms/jsonrpc-server/service.json",
+          "interpolate": true
+        }
+      ]
+    }
+  ]
+}

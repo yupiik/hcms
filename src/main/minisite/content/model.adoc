@@ -1,0 +1,42 @@
+= Model Configuration
+:minisite-keywords: hcms, model, entities, JSON-RPC
+:minisite-breadcrumb: Home[/] > Model
+:minisite-nav-prev-label: JSON-RPC
+:minisite-nav-next-label: Example
+
+HCMS is based on a JSON model configuration.
+Its intent is to define from a JSON configuration an API usable by any of your client applications (often single page applications).
+
+TIP: pages about the environment setup - datasource, server, ... - are on the xref:configuration.adoc[configuration] and the xref:deployment.adoc[deployment] pages.
+
+== Get completion
+
+Before starting to dig into the model itself, it is important to be properly setup.
+As soon as you get an IDE/editor with JSON schema support/completion you can just create a documentation (`model.json`) and inject the schema reference in it: link:https://www.yupiik.io/hcms/schema/model.jsonschema.json[JSON-Schema].
+
+Here is a basic document:
+
+[source,json]
+----
+{
+    "$schema": "https://www.yupiik.io/hcms/schema/model.jsonschema.json"
+}
+----
+
+== Configuration concept
+
+The configuration is focused on two concepts:
+
+. Entities,
+. JSON-RPC mapping.
+
+The entity (a.k.a. `EntitySpec`) defines what is an entity - columns, how it is mapped to SQL and what is allowed or not on it.
+
+The JSON-RPC mapping just links an entity to JSON-RPC method(s).
+For example linking an entity to a JSON-RPC type `CRUD` will define the methods `$entity.findById`, `$entity.findAll`, `$entity.create`, `$entity.update`, `$entity.deleteById`.
+
+TIP: since JSON-RPC supports bulking (send multiple requests as arrays), the `findById` method is also optimized when there are only `findById` sent at once enabling to do a single SQL query to load them all and still comply to JSON-RPC contract.
+
+== Configuration reference
+
+include::{partialsdir}/generated/model.schema.adoc[]

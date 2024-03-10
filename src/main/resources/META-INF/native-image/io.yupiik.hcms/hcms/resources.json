@@ -1,0 +1,14 @@
+{
+  "resources": {
+    "includes": [
+      {"pattern": "assets\\/yupiik.png"},
+      {"pattern": "META-INF\\/maven\\/org\\.webjars\\/swagger-ui\\/pom.properties"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui\\.css"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui\\.css\\.gz"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui\\.js"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui\\.js\\.gz"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui-standalone-preset\\.js"},
+      {"pattern": "META-INF\\/resources\\/webjars\\/swagger-ui.5.10.3\\/swagger-ui-standalone-preset\\.js\\.gz"}
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+= HCMS Installation
+:minisite-breadcrumb: Home[/] > Getting Started[getting-started.html] > Installation
+:minisite-nav-prev-label: Getting Started
+:minisite-nav-next-label: Configuration
+
+IMPORTANT: as of today, no release of HCMS is done so this process should be replaced by building from Github sources temporarly.
+
+== Java  Mode
+
+. Ensure to use java >= 17
+. Download the `hcms` on https://repo.maven.apache.org/maven2/io/yupiik/hcms/hcms/ (pick the last version and ensure ensure to take `-fat.jar` artifact).
+. You can now run it with the command: `java -Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager -jar hcms-<version>-fat.jar`. We recommend you to alias this command: `alias hcms='java -Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager -jar /path/to/hcms-<version>-fat.jar'`.
+
+TIP: as any java application you can also just run it with a flat classpath. While this is a bit more troublesome to do because it needs to maintain a classpath this is also more reliable and easier to enhance on the long run.
+
+== Binary (_linux amd64_ only)
+
+A script enables to install HCMS in `~/yupiik/hcms` for linux amd64 users:
+
+[source,bash]
+----
+curl -L https://www.yupiik.io/hcms/install/install.sh | bash
+----
+
+Once ran ensure you add `~/.yupiik/hcms/bin/` in your `PATH` and you can use `hcms` directly:
+
+[source,bash]
+----
+export PATH="~/.yupiik/hcms/bin/:$PATH"
+----
+
+TIP: add this line at the end of your `~/.bashrc` file.
+
+== Docker
+
+If you are using docker, the `ossyupiik/hcms` image is ready to run:
+
+[source,bash]
+----
+docker run \
+    -e HCMS_MODELLOCATION=/opt/hcms/conf/model.json \ <1>
+    -v $PWD/volume/:/opt/hcms/ \ <2>
+    ossyupiik/hcms:$tag <3>
+----
+<.> You can configure the server using environment variables (see xref:configuration.adoc[configuration] reference),
+<.> Don't forget to mount the folder with the `model.json`,
+<.> Always use a tagged version - ideally with its `sha256`.
+
+== Kubernetes
+
+For kubernetes users, a dedicated page is xref:kubernetes.adoc[available].
+

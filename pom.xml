@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2024 - present - Yupiik SAS - https://www.yupiik.com
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.yupiik.hcms</groupId>
+  <artifactId>hcms</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Yupiik HCMS</name>
+  <description>Yupiik Headless CMS</description>
+  <url>https://www.yupiik.io/hcms/</url>
+
+  <inceptionYear>2024 - present</inceptionYear>
+
+  <organization>
+    <name>Yupiik SAS</name>
+    <url>https://www.yupiik.com</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://github.com/yupiik/fusion/blob/master/LICENSE</url>
+      <distribution>may be downloaded from the Maven repository</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>rmannibucau</id>
+      <name>Romain Manni-Bucau</name>
+      <roles>
+        <role>Contributor</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <id>fpapon</id>
+      <name>Francois Papon</name>
+      <roles>
+        <role>Contributor</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:yupiik/hcms.git</connection>
+    <developerConnection>scm:git:git@github.com:yupiik/hcms.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/yupiik/hcms.git</url>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <properties>
+    <!-- Main Dependencies -->
+    <junit5.version>5.10.0</junit5.version>
+    <yupiik-fusion.version>1.0.15-SNAPSHOT</yupiik-fusion.version>
+    <yupiik-tools.version>1.2.1-SNAPSHOT</yupiik-tools.version>
+    <yupiik-bundlebee.version>1.0.25</yupiik-bundlebee.version>
+    <yupiik-logging.version>1.0.7</yupiik-logging.version>
+    <tomcat.version>10.1.19</tomcat.version>
+
+    <!-- Image related configuration -->
+    <image.base>azul/zulu-openjdk-alpine:21.0.1@sha256:d45f86fffd7ccd63839d0518f7aa69dd8c8e1703e2c9b6a62dabb813300946cd</image.base>
+    <image.workdir>/opt/yupiik/${project.artifactId}</image.workdir>
+    <image.version>${project.version}</image.version>
+    <image.name>ossyupiik/${project.artifactId}:${image.version}</image.name>
+    <jib.disableUpdateChecks>true</jib.disableUpdateChecks>
+    <bundlebee.kube.verbose>false</bundlebee.kube.verbose>
+    <bundlebee.namespace>default</bundlebee.namespace>
+    <bundlebee.environment>default</bundlebee.environment>
+    <bundlebee.alveolus>hcms</bundlebee.alveolus>
+
+    <!-- test/demo data -->
+    <rsa.kid>k001</rsa.kid>
+    <rsa.privateKey>MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJVadEdJh+Gds6RtZZv937FJPS4XdYm3BMSSIiFFZPqeYwQeKiqGkEo65PFdeD7mmmPZo8tiZX43lN9cZiJgygLAGCknPuocSaf0/rpLdi78L+0XRTWIrY0y5tWMnNcD1bmEpWyl5x50FT6JW3etGfFfpQrAHSOkgd2R+V19FwjzAgMBAAECgYAR3hITxoUzWurMh1Xk6o33UfwNZpBmMEypY5N3stXuHEKw5xbuTXjiQyzJKgB3rfOBxzNkN9pNK5hrfEyvsi/tzgwjp9V8ApbmotiYViPLtiST3WILpApbNI6/dP0iM98t29RfXBrRaEWD709CreO5S11FWBkU+2a8+hyYz7GE2QJBALUQulTj5p2QeUDEuqBI+vOwvIOfngHExkt9n8UnHlbdWHCJib2QxHjiAVDb4DHYog5KT28eMT2acFItom9NX88CQQDTKfHMoEMWUS3zTVKRq9pidCGn/eRi33EC1wRlijs0u/t/uKbYdnmTAt1I8AXOe2FZeiQo5YfHSj15TGcNqwmdAkEAlx0m5cJurgHtsIh/2VYPW2Kdcpy8mm1HsaletoQ3ZffF3+Zp9rPjxZ+ZyYo4SmGqnpKWSP7BydAi/fLoJkxFMQJAaDKzaWjPkeyfAwbtroohqiFqFi5Xi158so0NU1mhm4UDNmQUmI3lseBg90PRabFCOVfnDfMtS+7bZMaJt5nllQJAaCcR5CoWgqEIHijv0PK0SjmlVRzU5lwRMMi636E6o/gNxnY9tav+GCK9phuTYyrW6BPtbDJvz2N4hVtyTWZW2Q==</rsa.privateKey>
+    <rsa.publicCertificate>-----BEGIN PUBLIC KEY-----
+      MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCVWnRHSYfhnbOkbWWb/d+
+      xST0uF3WJtwTEkiIhRWT6nmMEHioqhpBKOuTxXXg+5ppj2aPLYmV+N5TfXG
+      YiYMoCwBgpJz7qHEmn9P66S3Yu/C/tF0U1iK2NMubVjJzXA9W5hKVspeced
+      BU+iVt3rRnxX6UKwB0jpIHdkfldfRcI8wIDAQAB
+      -----END PUBLIC KEY-----</rsa.publicCertificate>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.yupiik.logging</groupId>
+      <artifactId>yupiik-logging-jul</artifactId>
+      <version>${yupiik-logging.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-build-api</artifactId>
+      <version>${yupiik-fusion.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-processor</artifactId>
+      <version>${yupiik-fusion.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-jsonrpc</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-json</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-jwt</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-persistence</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-handlebars</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-observability</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-tracing</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-cli</artifactId>
+      <version>${yupiik-fusion.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.maven</groupId>
+      <artifactId>asciidoc-java</artifactId>
+      <version>${yupiik-tools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>swagger-ui</artifactId>
+      <version>5.10.3</version>
+    </dependency>
+
+    <!-- default database -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.2.224</version>
+    </dependency>
+
+    <!-- Doc dependencies -->
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-documentation</artifactId>
+      <version>${yupiik-fusion.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit5.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.yupiik.fusion</groupId>
+      <artifactId>fusion-testing</artifactId>
+      <version>${yupiik-fusion.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>7.0.0</version>
+        <configuration>
+          <injectAllReactorProjects>true</injectAllReactorProjects>
+          <generateGitPropertiesFile>false</generateGitPropertiesFile>
+          <dateFormat>yyyy-MM-dd'T'HH:mm:ss'Z'</dateFormat>
+          <dateFormatTimeZone>GMT</dateFormatTimeZone>
+          <includeOnlyProperties>
+            <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+            <includeOnlyProperty>^git.remote.origin.url$</includeOnlyProperty>
+            <includeOnlyProperty>^git.commit.id$</includeOnlyProperty>
+            <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>
+          </includeOnlyProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>get-the-git-infos</id>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+            <phase>initialize</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- mvn [compile] yupiik-tools:serve-minisite -e [-Dyupiik.minisite.openBrowser=false] -->
+        <groupId>io.yupiik.maven</groupId>
+        <artifactId>yupiik-tools-maven-plugin</artifactId>
+        <version>${yupiik-tools.version}</version>
+        <configuration>
+          <siteBase>https://${project.groupId}.github.io/${project.artifactId}</siteBase>
+          <logoText>HCMS</logoText>
+          <indexText>HCMS</indexText>
+          <copyright>Yupiik HCMS</copyright>
+          <indexSubTitle>Simple and powerful headeless CMS.</indexSubTitle>
+          <preferYupiikAsciidoc>true</preferYupiikAsciidoc>
+          <preActions>
+            <preAction>
+              <type>io.yupiik.fusion.documentation.DocumentationGenerator</type>
+              <configuration>
+                <formatter>definitionList</formatter>
+                <includeEnvironmentNames>true</includeEnvironmentNames>
+                <module>${project.artifactId}</module>
+                <urls>file://${project.build.outputDirectory}/META-INF/fusion/configuration/documentation.json</urls>
+              </configuration>
+            </preAction>
+            <preAction>
+              <type>io.yupiik.fusion.documentation.OpenRpcGenerator</type>
+              <configuration>
+                <output>${project.basedir}/src/main/minisite/content/_partials/generated/${artifactId}.openrpc.json</output>
+                <title>${artifactId} API</title>
+              </configuration>
+            </preAction>
+            <preAction>
+              <type>io.yupiik.fusion.documentation.OpenRPC2Adoc</type>
+              <configuration>
+                <input>${project.build.outputDirectory}/META-INF/fusion/jsonrpc/openrpc.json</input>
+                <output>${project.basedir}/src/main/minisite/content/_partials/generated/${artifactId}.openrpc.adoc</output>
+              </configuration>
+            </preAction>
+            <preAction>
+              <type>copy</type>
+              <configuration>
+                <from>${project.basedir}/src/main/minisite/content/_partials/generated/deployment/placeholders.completion.properties</from>
+                <to>${project.build.directory}/${project.build.finalName}/completion/placeholders.completion.properties</to>
+              </configuration>
+            </preAction>
+            <preAction>
+              <type>io.yupiik.hcms.build.CopyModelJsonSchema</type>
+            </preAction>
+          </preActions>
+          <attributes>
+            <partialsdir>${project.basedir}/src/main/minisite/content/_partials</partialsdir>
+            <gitCommitId>${git.commit.id}</gitCommitId>
+            <gitBranch>${git.branch}</gitBranch>
+            <gitTime>${git.commit.time}</gitTime>
+          </attributes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>io.yupiik.maven</groupId>
+            <artifactId>asciidoc-java</artifactId>
+            <version>${yupiik-tools.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>bundlebee</id>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <appendAssemblyId>true</appendAssemblyId>
+              <attach>true</attach>
+              <descriptors>
+                <descriptor>src/main/assembly/bundlebee.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <dependencies>
+          <dependency>
+            <groupId>io.yupiik.maven</groupId>
+            <artifactId>maven-shade-transformers</artifactId>
+            <version>0.0.5</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>fat</shadedClassifierName>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <dependencyReducedPomLocation>${project.build.directory}/reduced-pom.xml</dependencyReducedPomLocation>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>io.yupiik.fusion.framework.api.main.Launcher</mainClass>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionDocumentationTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionJsonSchemaTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionOpenRPCTransformer" />
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/LICENSE.txt</exclude>
+                    <exclude>META-INF/LICENSE</exclude>
+                    <exclude>META-INF/NOTICE.txt</exclude>
+                    <exclude>META-INF/NOTICE</exclude>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/DEPENDENCIES</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- mvn bundlebee:apply [-D....] -->
+        <groupId>io.yupiik</groupId>
+        <artifactId>bundlebee-maven-plugin</artifactId>
+        <version>${yupiik-bundlebee.version}</version>
+        <configuration>
+          <manifest>${project.basedir}/src/main/bundlebee/manifest.json</manifest>
+          <alveolus>${bundlebee.alveolus}</alveolus>
+          <mavenRepositoriesDownloadsEnabled>true</mavenRepositoriesDownloadsEnabled>
+          <mavenRepositoriesSnapshot>https://oss.sonatype.org/content/repositories/snapshots/</mavenRepositoriesSnapshot>
+          <kubeVerbose>${bundlebee.kube.verbose}</kubeVerbose>
+          <kubeNamespace>${bundlebee.namespace}</kubeNamespace>
+          <skipPackaging>
+            <skipPackaging>none</skipPackaging>
+          </skipPackaging>
+          <customPlaceholders>
+            <app.deploytime>${maven.build.timestamp}</app.deploytime>
+            <!-- to extract the environment configuration in a file (supports maven placeholders)
+            <bundlebee-placeholder-import>${project.basedir}/environment/${bundlebee.environment}.properties</bundlebee-placeholder-import>
+            -->
+          </customPlaceholders>
+        </configuration>
+        <executions>
+          <execution>
+            <id>doc</id>
+            <goals>
+              <goal>placeholder-extract</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <outputType>FILE</outputType>
+              <failOnInvalidDescription>true</failOnInvalidDescription>
+              <dumpLocation>${project.basedir}/src/main/minisite/content/_partials/generated/deployment</dumpLocation>
+              <descriptions>${project.basedir}/src/main/bundlebee/placeholders.descriptions.properties</descriptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.4.0</version>
+        <!--
+        mvn package jib:build [-Dimage.registry=...] -> will be pushed
+        mvn package jib:dockerBuild -> local docker image
+        -->
+        <configuration>
+          <containerizingMode>packaged</containerizingMode>
+          <from>
+            <image>${image.base}</image>
+          </from>
+          <to>
+            <image>${image.name}</image>
+          </to>
+          <container>
+            <mainClass>io.yupiik.fusion.framework.api.main.Launcher</mainClass>
+            <appRoot>${image.workdir}</appRoot>
+            <workingDirectory>${image.workdir}</workingDirectory>
+            <extraClasspath>${image.workdir}/custom/*:${image.workdir}/custom</extraClasspath>
+            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+            <jvmFlags>
+              <jvmFlag>-Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager</jvmFlag>
+              <jvmFlag>-Dio.yupiik.logging.jul.handler.StandardHandler.formatter=json</jvmFlag>
+              <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+              <jvmFlag>-Djdk.serialFilter=!*</jvmFlag>
+              <jvmFlag>-Djdk.jndi.object.factoriesFilter=!*</jvmFlag>
+              <jvmFlag>-Dcom.sun.jndi.ldap.object.trustSerialData=false</jvmFlag>
+            </jvmFlags>
+            <labels>
+              <org.opencontainers.image.revision>${git.commit.id}</org.opencontainers.image.revision>
+              <org.opencontainers.image.ref.name>${git.branch}</org.opencontainers.image.ref.name>
+              <org.opencontainers.image.source>${git.remote.origin.url}</org.opencontainers.image.source>
+              <org.opencontainers.image.url>${project.scm.url}</org.opencontainers.image.url>
+              <org.opencontainers.image.documentation>${project.url}</org.opencontainers.image.documentation>
+              <org.opencontainers.image.created>${maven.build.timestamp}</org.opencontainers.image.created>
+              <org.opencontainers.image.authors>${project.artifactId}</org.opencontainers.image.authors>
+              <org.opencontainers.image.vendor>${project.artifactId}</org.opencontainers.image.vendor>
+              <org.opencontainers.image.title>${project.artifactId}</org.opencontainers.image.title>
+              <org.opencontainers.image.description>${project.description}</org.opencontainers.image.description>
+              <org.opencontainers.image.version>${project.version}</org.opencontainers.image.version>
+              <com.application.params>_JAVA_OPTIONS=...</com.application.params>
+              <com.application.cmd>docker run ${image.name} &lt;args&gt;</com.application.cmd>
+            </labels>
+          </container>
+          <outputPaths>
+            <imageJson>${project.build.directory}/jib-image.json</imageJson>
+          </outputPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.3.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>21</source>
+          <target>21</target>
+          <release>21</release>
+          <encoding>UTF-8</encoding>
+          <proc>none</proc>
+          <useIncrementalCompilation>false</useIncrementalCompilation>
+          <annotationProcessors>
+            <annotationProcessor>io.yupiik.fusion.framework.processor.FusionProcessor</annotationProcessor>
+          </annotationProcessors>
+          <compilerArgs>
+            <compilerArg>-parameters</compilerArg>
+          </compilerArgs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-process-annotations</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <proc>only</proc>
+              <useIncrementalCompilation>true</useIncrementalCompilation>
+              <compilerArgs>
+                <compilerArg>-Afusion.moduleFqn=io.yupiik.hcms.HCMSModule</compilerArg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-test-process-annotations</id>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <proc>only</proc>
+              <useIncrementalCompilation>true</useIncrementalCompilation>
+              <compilerArgs>
+                <compilerArg>-Afusion.moduleFqn=io.yupiik.hcms.test.HCMSTestModule</compilerArg>
+              </compilerArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <trimStackTrace>false</trimStackTrace>
+          <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter" />
+          <systemPropertyVariables>
+            <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+
+            <java.util.logging.manager>io.yupiik.logging.jul.YupiikLogManager</java.util.logging.manager>
+
+            <jdk.tracePinnedThreads>short</jdk.tracePinnedThreads>
+
+            <fusion.http-server.port>0</fusion.http-server.port>
+            <fusion.observability.server.port>0</fusion.observability.server.port>
+
+            <hcms.database.driver>org.h2.Driver</hcms.database.driver>
+            <hcms.database.url>jdbc:h2:mem:hcms;MODE=PostgreSQL</hcms.database.url>
+
+            <hcms.security.privateKey>${rsa.privateKey}</hcms.security.privateKey>
+            <hcms.security.kid>${rsa.kid}</hcms.security.kid>
+            <hcms.security.keys.length>1</hcms.security.keys.length>
+            <hcms.security.keys.0.kid>${rsa.kid}</hcms.security.keys.0.kid>
+            <hcms.security.keys.0.use>sig</hcms.security.keys.0.use>
+            <hcms.security.keys.0.kty>RSA</hcms.security.keys.0.kty>
+            <hcms.security.keys.0.alg>RS256</hcms.security.keys.0.alg>
+            <hcms.security.keys.0.n>MTA0ODc5NDc5NzU2ODk3NjYyOTI0ODM4MjY5Njg4MDM3NjE4NDYxNDI2NDE0Mzg3NDk1ODYyODcwNDYxMzk2ODg3ODM4NDc0OTczNDgxMjE5MDA0NzkxNTM3NTMzNTgxODg5NDQ2NTQwODA3NzQwMjcyNTY0MDMzNDU0OTEwNTM3OTE3MTYyOTA3NTA0MTc0ODQxMDg4ODQ2MDYwNTExNzYzODUzNjE2MTA1MjYyMDYxNDYyMDk1NzQxODA4MjI5MjczNjk0MTYyMzYyODc4MjAyNjAzOTczOTg5NzkxMDg0MTc3MjQ5MDkxMzE5NzE2ODczMDk5Njk3ODQ4NzczMTMwNTA1NzU1MDE1NDM5MzA4ODc0ODk3NDI0OTkxODMyNzYzNDEyMjQ4MDI2MzAxMjcwMjU5</hcms.security.keys.0.n>
+            <hcms.security.keys.0.e>NjU1Mzc=</hcms.security.keys.0.e>
+            <hcms.security.keys.0.x5c>${rsa.publicCertificate}</hcms.security.keys.0.x5c>
+          </systemPropertyVariables>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>me.fabriciorby</groupId>
+            <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+            <version>0.1.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <excludes>
+            <exclude>**/.keepit</exclude>
+            <exclude>**/build/**</exclude>
+          </excludes>
+          <archive combine.children="append">
+            <manifestEntries>
+              <App-Build-Timestamp>${maven.build.timestamp}</App-Build-Timestamp>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>3.0.0-M1</version>
+        <configuration>
+          <scmCommentPrefix>[ci skip][maven-release-plugin]</scmCommentPrefix>
+          <releaseProfiles>release</releaseProfiles>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!-- mvn clean process-classes arthur:native-image -->
+        <groupId>org.apache.geronimo.arthur</groupId>
+        <artifactId>arthur-maven-plugin</artifactId>
+        <version>1.0.8</version>
+        <configuration>
+          <main>io.yupiik.fusion.framework.api.main.Launcher</main>
+          <graalVersion>21.0.2-graalce</graalVersion>
+          <output>${project.build.directory}/hcms</output>
+          <buildStaticImage>false</buildStaticImage>
+          <customOptions>
+            <customOption>-H:+StaticExecutableWithDynamicLibC</customOption>
+            <customOption>-Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager</customOption>
+          </customOptions>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <!--  mvn ossindex:audit -->
+        <groupId>org.sonatype.ossindex.maven</groupId>
+        <artifactId>ossindex-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <scope>compile,runtime</scope>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.cyclonedx</groupId>
+        <artifactId>cyclonedx-maven-plugin</artifactId>
+        <version>2.8.0-SNAPSHOT</version>
+        <configuration>
+          <projectType>library</projectType>
+          <schemaVersion>1.4</schemaVersion>
+          <includeBomSerialNumber>true</includeBomSerialNumber>
+          <includeCompileScope>true</includeCompileScope>
+          <includeProvidedScope>true</includeProvidedScope>
+          <includeRuntimeScope>true</includeRuntimeScope>
+          <includeSystemScope>true</includeSystemScope>
+          <includeTestScope>false</includeTestScope>
+          <includeLicenseText>false</includeLicenseText>
+          <outputReactorProjects>true</outputReactorProjects>
+          <outputFormat>all</outputFormat>
+          <outputName>${project.artifactId}-sbom</outputName>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <!--goal>makeAggregateBom</goal-->
+              <goal>makeBom</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>2.43.0</version>
+        <configuration>
+          <formats>
+            <format>
+              <includes>
+                <include>.gitattributes</include>
+                <include>.gitignore</include>
+              </includes>
+              <trimTrailingWhitespace />
+              <endWithNewline />
+              <indent>
+                <tabs>true</tabs>
+                <spacesPerTab>4</spacesPerTab>
+              </indent>
+            </format>
+          </formats>
+          <java>
+            <encoding>UTF-8</encoding>
+            <includes>
+              <include>src/main/java/**/*.java</include>
+              <include>src/test/java/**/*.java</include>
+            </includes>
+            <excludes>
+              <exclude>**/*generated*/**/*.java</exclude>
+            </excludes>
+            <licenseHeader>
+              <content><![CDATA[/*
+ * Copyright (c) $YEAR - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */]]></content>
+            </licenseHeader>
+            <palantirJavaFormat>
+              <version>2.40.0</version>
+            </palantirJavaFormat>
+            <removeUnusedImports />
+          </java>
+          <pom>
+            <sortPom>
+              <expandEmptyElements>false</expandEmptyElements>
+              <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+            </sortPom>
+          </pom>
+        </configuration>
+        <executions>
+          <execution>
+            <id>spotless-apply</id>
+            <goals>
+              <!-- too lazy for now to do it manually -->
+              <goal>apply</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+          <!--
+          <execution>
+            <id>spotless-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+          -->
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <!--  mvn clean package -Pgh-pages  -->
+      <id>gh-pages</id>
+
+      <properties>
+        <minisite.serverId>github.com</minisite.serverId>
+      </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.yupiik.maven</groupId>
+            <artifactId>yupiik-tools-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>gh-pages</id>
+                <goals>
+                  <goal>minisite</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <git>
+                    <ignore>false</ignore>
+                    <noJekyll>true</noJekyll>
+                    <serverId>${minisite.serverId}</serverId>
+                    <branch>refs/heads/gh-pages</branch>
+                    <url>${project.scm.url}</url>
+                  </git>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+              <source>11</source>
+              <doclint>none</doclint>
+              <encoding>UTF-8</encoding>
+              <failOnError>false</failOnError>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>jib-maven-plugin</artifactId>
+            <version>3.4.0</version>
+            <executions>
+              <execution>
+                <id>oci</id>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

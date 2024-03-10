@@ -1,0 +1,11 @@
+= Kubernetes
+:minisite-keywords: hcms, Kubernetes
+:minisite-breadcrumb: Home[/] > Deployment[deployment.html] > Kubernetes
+:minisite-nav-prev-label: Deployment
+:minisite-nav-next-label: Kubernetes
+
+Since HCMS can be packaged as an OCI image (using JIB in the build if you don't build a custom image) and has a Yupiik link:https://www.yupiik.io/bundlebee/[BundleBee] alveolus, it is quite easy to deploy to any Kubernetes cluster.
+
+It is mainly a matter of getting the `hcms-$version-bundlebee.jar` on central (see xref:installation.adoc[installation] for the link) and running Yupiik BundleBee on it providing optional placeholders if needed: `bundlebee apply --from io.yupiik.hcms:hcms:$version --alveolus hcms-jsonrpc-server --hcms.version $version` (you need to set the version twice because you can use the alveolus to deploy another version even if we recommend to use the same for both).
+
+NOTE: you can also use Helm or `kubectl` to deploy Yupiik HCMS if you prefer.

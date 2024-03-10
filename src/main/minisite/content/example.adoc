@@ -1,0 +1,149 @@
+= Example
+:minisite-keywords: hcms, model, example
+:minisite-breadcrumb: Home[/] > Example
+:minisite-nav-prev-label: Model
+:minisite-nav-next-label: Deployment
+
+This page shows an example of `model.json` you can point to using the environment variable `HCMS_MODELLOCATION`.
+
+== Blog example
+
+A common example is a blog example: you have posts which can have comments.
+
+Here is a simplistic configuration to do that - ignoring security for now:
+
+[source,json]
+----
+{
+  "partialOpenRPC": {
+    "info": {
+      "title": "Blog sample",
+      "version": "1.0.0"
+    }
+  },
+  "entities": [
+    {
+      "name": "posts",
+      "tableName": "post",
+      "generatedCreateFields": {
+        "id": "uuid"
+      },
+      "identifierNames": [
+        "id"
+      ],
+      "allowedWhereKeys": [
+        "title"
+      ],
+      "allowedWhereOperators": [
+        "=",
+        "like"
+      ],
+      "allowedSortKeys": [
+        "title"
+      ],
+      "jsonSchema": {
+        "type": [
+          "object"
+        ],
+        "properties": {
+          "id": {
+            "type": [
+              "string"
+            ]
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": [
+              "string"
+            ]
+          },
+          "content": {
+            "type": [
+              "string"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "comments",
+      "tableName": "comment",
+      "naming": "CAMEL_TO_SNAKE",
+      "generatedCreateFields": {
+        "id": "uuid"
+      },
+      "identifierNames": [
+        "id"
+      ],
+      "allowedWhereKeys": [
+        "post_id"
+      ],
+      "allowedWhereOperators": [
+        "="
+      ],
+      "jsonSchema": {
+        "type": [
+          "object"
+        ],
+        "required": [
+            "post_id"
+        ],
+        "properties": {
+          "id": {
+            "type": [
+              "string"
+            ]
+          },
+          "postId": {
+            "type": [
+              "string"
+            ]
+          },
+          "content": {
+            "type": [
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "jsonRpcMethods": [
+    {
+      "type": "CRUD",
+      "entityName": "posts"
+    },
+    {
+      "type": "CREATE",
+      "entityName": "comments"
+    },
+    {
+      "type": "DELETE_BY_ID",
+      "entityName": "comments"
+    },
+    {
+      "type": "FIND_ALL",
+      "entityName": "comments"
+    }
+  ]
+}
+----
+
+What is interesting to see there is that `comments` entity does not define all CRUD methods but only a subset (functionally we forbid to update a comment for example).
+
+TIP: if you need more control about the validations - like forbidding to comment a post on some custom rule you can write a HCMS Java extension observing `io.yupiik.fusion.jsonrpc.event.BeforeRequest` event to add any custom logic you need.
+
+== Tips
+
+This example intends to get you started but don't forget you can go further so have  look in xref:model.adoc[model] reference to the following items:
+
+* `sql` entry in the configuration enables you to get some initialization of the database: `"sql": ["ddl/01-create-database.h2.sql","ddl/10-blog.h2.sql"],`,
+* You can enforce the JSON-Schema of the entity ar `create` and `update` time setting `"validateWithJsonSchema": true,` in the entity,
+* Security can be handled, often it is a mix between custom where clauses (implicit) and JWT validation,
+* You can add `created`, `last_updated` columns using computed fields,
+* You can use renderers to get a HTML flavor of asciidoc content.

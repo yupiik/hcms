@@ -1,0 +1,43 @@
+name: Github Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      customOpts:
+        description: 'Release maven options (optional)'
+        type: string
+        default: '-Pnative -Prelease'
+        required: false
+      goals:
+        description: 'Release maven options (optional)'
+        type: string
+        default: 'release:prepare release:perform jib:build'
+        required: false
+
+env:
+  MAVEN_OPTS: -Dmaven.artifact.threads=256 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  DOCKER_TOKEN: ${{secrets.DOCKER_TOKEN}}
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone
+        id: clone
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        id: java21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+          cache: 'maven'
+      - name: Release
+        run: echo "not yet enabled"; exit 1; mvn $GOALS -e -Dusername="$GIT_HUB_ACCOUNT" -Dpassword="$GIT_HUB_TOKEN $CUSTOM_OPTS"
+        env:
+          CUSTOM_OPTS: ${{ inputs.customOpts }}
+          GOALS: ${{ inputs.goals }}
+      - name: Remove Snapshots Before Caching
+        run: find ~/.m2/repository -name '*SNAPSHOT' | xargs rm -Rf
