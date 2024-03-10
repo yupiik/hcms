@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/configuration.html</loc>
+        <loc>https://www.yupiik.io/hcms/configuration.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/deployment.html</loc>
+        <loc>https://www.yupiik.io/hcms/deployment.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/example.html</loc>
+        <loc>https://www.yupiik.io/hcms/example.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/getting-started.html</loc>
+        <loc>https://www.yupiik.io/hcms/getting-started.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/installation.html</loc>
+        <loc>https://www.yupiik.io/hcms/installation.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/json-rpc.html</loc>
+        <loc>https://www.yupiik.io/hcms/json-rpc.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/kubernetes.html</loc>
+        <loc>https://www.yupiik.io/hcms/kubernetes.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
     <url>
-        <loc>https://io.yupiik.hcms.github.io/hcms/model.html</loc>
+        <loc>https://www.yupiik.io/hcms/model.html</loc>
         <lastmod>2024-03-10</lastmod>
     </url>
 </urlset>

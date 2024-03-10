@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Simple and powerful headeless CMS.">
+    <meta name="description" content="Simple and powerful headless CMS.">
     <meta name="author" content="Yupiik Minisite Generator">
     <meta name="generator" content="Yupiik Minisite Generator">
     <meta name="keywords" content="configuration, json-rpc, documentation">
@@ -19,14 +19,14 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/vs2015.min.css" integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ==" crossorigin="anonymous" />
     
-    <link id="theme-style" rel="stylesheet" href="https://io.yupiik.hcms.github.io/hcms/css/theme.css?v=1.0.0-SNAPSHOT">
+    <link id="theme-style" rel="stylesheet" href="https://www.yupiik.io/hcms/css/theme.css?v=1.0.0-SNAPSHOT">
 </head>
 <body>
     <header class="header fixed-top">
         <div class="branding docs-branding">
             <div class="container-fluid position-relative py-2">
                 <div class="docs-logo-wrapper">
-	                <div class="site-logo"><a title="Home" class="navbar-brand" href="https://io.yupiik.hcms.github.io/hcms/index.html">
+	                <div class="site-logo"><a title="Home" class="navbar-brand" href="https://www.yupiik.io/hcms/index.html">
 	                <img class="logo-icon mr-2" src="//www.yupiik.io/images/favicon.png" alt="logo">
 	                <span class="logo-text">HCMS <span class="text-alt">Docs</span></span></a></div>
                 </div>
@@ -47,19 +47,19 @@
             <h3>Menu</h3>
             <ul>
                 <li>
-                    <a title="Getting Started" href="https://io.yupiik.hcms.github.io/hcms/getting-started.html">
+                    <a title="Getting Started" href="https://www.yupiik.io/hcms/getting-started.html">
                         <i class="fas fa-desktop"></i>Getting Started
                     </a>
                 </li>                <li>
-                    <a title="JSON-RPC API" href="https://io.yupiik.hcms.github.io/hcms/json-rpc.html">
-                        <i class="fas fa-laptop-house"></i>JSON-RPC
-                    </a>
-                </li>                <li>
-                    <a title="Configuration" href="https://io.yupiik.hcms.github.io/hcms/configuration.html">
+                    <a title="Configuration" href="https://www.yupiik.io/hcms/configuration.html">
                         <i class="fas fa-code"></i>Configuration
                     </a>
                 </li>                <li>
-                    <a title="Deployment" href="https://io.yupiik.hcms.github.io/hcms/deployment.html">
+                    <a title="JSON-RPC API" href="https://www.yupiik.io/hcms/json-rpc.html">
+                        <i class="fas fa-laptop-house"></i>JSON-RPC
+                    </a>
+                </li>                <li>
+                    <a title="Deployment" href="https://www.yupiik.io/hcms/deployment.html">
                         <i class="fas fa-space-shuttle"></i>Deployment
                     </a>
                 </li>
@@ -286,7 +286,7 @@ function addCopyButtons(clipboard) {
   document.querySelectorAll('pre > code').forEach(function (codeBlock) {
   var button = document.createElement('button');  button.className = 'copy-code-button';  button.type = 'button';  button.innerText = 'Copy';  button.addEventListener('click', function () {   clipboard.writeText(codeBlock.innerText).then(function () {   button.blur();   button.innerText = 'Copied!';   setTimeout(function () { button.innerText = 'Copy'; }, 2000); }, function (error) { button.innerText = 'Error'; });  });  var pre = codeBlock.parentNode;  if (pre.parentNode.classList.contains('highlight')) {   var highlight = pre.parentNode; highlight.parentNode.insertBefore(button, highlight);  } else { pre.parentNode.insertBefore(button, pre); } });}
 if (navigator && navigator.clipboard) { addCopyButtons(navigator.clipboard);} else { var script = document.createElement('script'); script.src = '//cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/2.7.0/clipboard-polyfill.promise.js'; script.integrity = 'sha256-waClS2re9NUbXRsryKoof+F9qc1gjjIhc2eT7ZbIv94='; script.crossOrigin = 'anonymous'; script.onload = function() {addCopyButtons(clipboard);}; document.body.appendChild(script);} }</script>
-    <script src="https://io.yupiik.hcms.github.io/hcms/js/minisite.js?v=1.0.0-SNAPSHOT"></script>
+    <script src="https://www.yupiik.io/hcms/js/minisite.js?v=1.0.0-SNAPSHOT"></script>
     <script>$('.page-content-body').generatedNavMenu();</script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.3/fuse.min.js" integrity="sha512-neoBxVNv0UMXjoilAYGxfWrSsW6iAVclx7vQKdPJ9Peet1bM5YQjU0aIB8LtH8iNPa+pAyMZprBBw2ZQ/Q1LjQ==" crossorigin="anonymous"></script>
