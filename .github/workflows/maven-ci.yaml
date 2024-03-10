@@ -25,22 +25,22 @@ jobs:
         run: mvn package -e
       - name: Remove Snapshots Before Caching
         run: find ~/.m2/repository -name '*SNAPSHOT' | xargs rm -Rf
-   deploy-doc:
-     if: github.ref == 'refs/heads/main'
-     name: Documentation
-     runs-on: ubuntu-20.04
-     steps:
-       - name: Clone
-         id: clone
-         uses: actions/checkout@v4
-       - name: Set up JDK 21
-         id: java21
-         uses: actions/setup-java@v4
-         with:
-           distribution: 'zulu'
-           java-version: '21'
-           cache: 'maven'
-       - name: Deploy-Documentation
-         run: mvn package -Pgh-pages -e
-       - name: Remove Snapshots Before Caching
-         run: find ~/.m2/repository -name '*SNAPSHOT' | xargs rm -Rf
+  deploy-doc:
+   if: github.ref == 'refs/heads/main'
+   name: Documentation
+   runs-on: ubuntu-20.04
+   steps:
+     - name: Clone
+       id: clone
+       uses: actions/checkout@v4
+     - name: Set up JDK 21
+       id: java21
+       uses: actions/setup-java@v4
+       with:
+         distribution: 'zulu'
+         java-version: '21'
+         cache: 'maven'
+     - name: Deploy-Documentation
+       run: mvn package -Pgh-pages -e
+     - name: Remove Snapshots Before Caching
+       run: find ~/.m2/repository -name '*SNAPSHOT' | xargs rm -Rf
