@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Deployment</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple and powerful headeless CMS.">
+    <meta name="author" content="Yupiik Minisite Generator">
+    <meta name="generator" content="Yupiik Minisite Generator">
+    <meta name="keywords" content="configuration, json-rpc, documentation">
+
+    <link rel="shortcut icon" href="//www.yupiik.io/images/favicon.png">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.5-5/css/asciidoctor.min.css" integrity="sha512-kI7tn5cuEg16kMeXnYmg8rEJPxbxzEM7Gsr191iQdLDevFBLXPCSU9aZWSVuP61tMZWU3nBAR1cJ7SmXnOGLZw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/vs2015.min.css" integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ==" crossorigin="anonymous" />
+    
+    <link id="theme-style" rel="stylesheet" href="https://io.yupiik.hcms.github.io/hcms/css/theme.css?v=1.0.0-SNAPSHOT">
+</head>
+<body>
+    <header class="header fixed-top">
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+	                <div class="site-logo"><a title="Home" class="navbar-brand" href="https://io.yupiik.hcms.github.io/hcms/index.html">
+	                <img class="logo-icon mr-2" src="//www.yupiik.io/images/favicon.png" alt="logo">
+	                <span class="logo-text">HCMS <span class="text-alt">Docs</span></span></a></div>
+                </div>
+	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+					
+					<li class="list-inline-item"><a title="Search" id="search-button" href="#" data-toggle="modal" data-target="#searchModal"><i data-toggle="tooltip" data-placement="top" title="Search" class="fas fa-search"></i></a></li>
+
+					<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						
+						<li class="list-inline-item"><a title="Github" href="https://www.github.com/yupiik/"><i class="fab fa-github fa-fw"></i></a></li><li class="list-inline-item"><a title="LinkedIn" href="https://www.linkedin.com/company/yupiik/"><i class="fab fa-linkedin fa-fw"></i></a></li>
+		            </ul>
+	            </div>
+            </div>
+        </div>
+    </header>
+	<div class="page">
+        <div class="page-navigation-left">
+            <h3>Menu</h3>
+            <ul>
+                <li>
+                    <a title="Getting Started" href="https://io.yupiik.hcms.github.io/hcms/getting-started.html">
+                        <i class="fas fa-desktop"></i>Getting Started
+                    </a>
+                </li>                <li>
+                    <a title="JSON-RPC API" href="https://io.yupiik.hcms.github.io/hcms/json-rpc.html">
+                        <i class="fas fa-laptop-house"></i>JSON-RPC
+                    </a>
+                </li>                <li>
+                    <a title="Configuration" href="https://io.yupiik.hcms.github.io/hcms/configuration.html">
+                        <i class="fas fa-code"></i>Configuration
+                    </a>
+                </li>                <li>
+                    <a title="Deployment" href="https://io.yupiik.hcms.github.io/hcms/deployment.html">
+                        <i class="fas fa-space-shuttle"></i>Deployment
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="deployment-html-container" class="container page-content deployment-html">
+            <nav aria-label="breadcrumb" style="padding-left: 0;">
+  <ol class="breadcrumb" style="margin-left: 0;background-color: unset;padding-left: 0;">
+    <li class="breadcrumb-item"><a href="/"><svg viewBox="0 0 24 24" style="height: 1.4rem;position: relative;top: 1px;vertical-align: top;width: 1.1rem;"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li>
+    <li class="breadcrumb-item active" aria-current="page">Deployment</li>
+  </ol>
+</nav>            <div class="page-header">
+                <h1>Deployment</h1>
+            </div>
+            <div class="page-content-body">
+                <div id="preamble">
+ <div class="sectionbody">
+ <div class="paragraph">
+ <p>This page lists deployment configuration. It is based on placeholders (variables) and tunable using an environment file or maven properties. You can check the pom for <code>bundlebee-placeholder-import</code> comment to see how to enable an externalised file to host the environment variables.</p>
+ </div>
+ </div>
+ </div>
+ <div class="sect1" id="_placeholders">
+  <h2>Placeholders</h2>
+ <div class="sectionbody">
+ <div class="paragraph">
+ <dl>
+  <dt><code>image.pullPolicy</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Deployment image pull policy (if image is moving - <code>snapshot</code> or <code>latest</code>, ensure to set it to <code>Always</code>). Default: <code>IfNotPresent</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.version</code>*</p>
+ </div>
+</dt>
+  <dd>
+Image tag version to deploy.</dd>
+ </dl>
+ <dl>
+  <dt><code>hcms.resources.requests.cpu</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Kubernetes CPU requests. Default: <code>1</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt><code>hcms.resources.memory</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Kubernetes resources memory to allocate. Default: <code>512Mi</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>image.registry</code>*</p>
+ </div>
+</dt>
+  <dd>
+Base image registry to pull the image from.</dd>
+ </dl>
+ <dl>
+  <dt><code>user.name</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Deployment user - injected in a label. Default: <code>unknown</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt><code>app.deploytime</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Label with the deployment time injected. Using maven setup it uses <code>maven.build.timestamp</code> property. Default: <code>unset</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt><code>hcms.replicas</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Number of replicas for the web application. Default: <code>1</code>.</p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt><code>bundlebee.environment</code></dt>
+  <dd>
+ <div class="paragraph">
+ <p>Label hosting the environment name (can enable to identify deployment errors). Default: <code>default</code>.</p>
+ </div>
+</dd>
+ </dl>
+ </div>
+ </div>
+ </div>
+ <div class="sect1" id="_sample">
+  <h2>Sample</h2>
+ <div class="sectionbody">
+ <div class="paragraph">
+ <p>This part shows a a sample configuration file you can use as a base for <code>bundlebee-placeholder-import</code> file.</p>
+ </div>
+ <div class="admonitionblock tip">
+  <table>
+    <tbody>
+     <tr>
+      <td class="icon">
+     <div class="title">TIP</div>
+       </td>
+      <td class="content">
+ <div class="paragraph">
+ <p>if you use  <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a>
+ you can install  <a href="https://marketplace.visualstudio.com/items?itemName=rmannibucau.properties-completion" target="_blank" rel="noopener">properties completion</a>
+ extension to fill this page. Use this  <a href="completion/placeholders.completion.properties">link</a>
+ url as a header of the file: <code># vscode_properties_completion_proposals=https://.../completion/placeholders.completion.properties</code>.</p>
+ </div>
+    </td>
+   </tr>
+      </tbody>
+  </table>
+ </div>
+ <div class="listingblock">
+ <div class="content">
+ <pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties"># vscode_properties_completion_proposals=https://.../completion/placeholders.completion.properties
+
+# HELP: Deployment image pull policy (if image is moving - `snapshot` or `latest`, ensure to set it to `Always`).
+# image.pullPolicy = IfNotPresent
+
+# HELP: Image tag version to deploy.
+# hcms.version = 
+
+# HELP: Kubernetes CPU requests.
+# hcms.resources.requests.cpu = 1
+
+# HELP: Kubernetes resources memory to allocate.
+# hcms.resources.memory = 512Mi
+
+# HELP: Base image registry to pull the image from.
+# image.registry = 
+
+# HELP: Deployment user - injected in a label.
+# user.name = unknown
+
+# HELP: Label with the deployment time injected. Using maven setup it uses `maven.build.timestamp` property.
+# app.deploytime = unset
+
+# HELP: Number of replicas for the web application.
+# hcms.replicas = 1
+
+# HELP: Label hosting the environment name (can enable to identify deployment errors).
+# bundlebee.environment = default</code></pre>
+ </div>
+ </div>
+ </div>
+ </div>
+                
+                <nav class="page-footer-nav" aria-label="Docs pages">
+    <a href="example.html" class="page-footer-nav-link-prev">
+    <div>Previous</div>
+    <div>Example</div>
+</a>
+    <a href="kubernetes.html" class="page-footer-nav-link-next">
+    <div>Next</div>
+    <div>Kubernetes</div>
+</a>
+</nav>
+            </div>
+        </div>
+    <div class="page-navigation-right">
+        <h3>Navigation</h3>
+        <nav class="generated-nav-menu"></nav>
+    </div>
+    </div>
+    <footer class="footer pb-5">
+	    <div class="text-center">
+		    <ul class="social-list list-unstyled">
+                <li class="list-inline-item"><a title="Github" href="https://www.github.com/yupiik/"><i class="fab fa-github fa-fw"></i></a></li><li class="list-inline-item"><a title="LinkedIn" href="https://www.linkedin.com/company/yupiik/"><i class="fab fa-linkedin fa-fw"></i></a></li>
+	        </ul>
+            <small class="copyright">Yupiik HCMS</small> | <a href="https://www.yupiik.com/terms-of-use/">Terms of use</a> | <a href="https://www.yupiik.com/privacy-policy/">Privacy policy</a>
+	    </div>
+    </footer>
+
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="return false;" class="form-inline">
+          <div class="form-group">
+            <label for="searchInput"><b>Search: </b></label>
+            <input class="form-control" id="searchInput" placeholder="Enter search text and hit enter...">
+          </div>
+        </form>
+        <div class="search-hits"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js" integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js" integrity="sha512-d00ajEME7cZhepRqSIVsQVGDJBdZlfHyQLNC6tZXYKTG7iwcF8nhlFuppanz8hYgXr8VvlfKh4gLC25ud3c90A==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/bash.min.js" integrity="sha512-Hg0ufGEvn0AuzKMU0psJ1iH238iUN6THh7EI0CfA0n1sd3yu6PYet4SaDMpgzN9L1yQHxfB3yc5ezw3PwolIfA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/bash.min.js" integrity="sha512-Hg0ufGEvn0AuzKMU0psJ1iH238iUN6THh7EI0CfA0n1sd3yu6PYet4SaDMpgzN9L1yQHxfB3yc5ezw3PwolIfA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/json.min.js" integrity="sha512-37sW1XqaJmseHAGNg4N4Y01u6g2do6LZL8tsziiL5CMXGy04Th65OXROw2jeDeXLo5+4Fsx7pmhEJJw77htBFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/dockerfile.min.js" integrity="sha512-eRNl3ty7GOJPBN53nxLgtSSj2rkYj5/W0Vg0MFQBw8xAoILeT6byOogENHHCRRvHil4pKQ/HbgeJ5DOwQK3SJA==" crossorigin="anonymous"></script>
+    <script>if (!(window.minisite || {}).skipHighlightJs) { hljs.highlightAll();
+function addCopyButtons(clipboard) {
+  document.querySelectorAll('pre > code').forEach(function (codeBlock) {
+  var button = document.createElement('button');  button.className = 'copy-code-button';  button.type = 'button';  button.innerText = 'Copy';  button.addEventListener('click', function () {   clipboard.writeText(codeBlock.innerText).then(function () {   button.blur();   button.innerText = 'Copied!';   setTimeout(function () { button.innerText = 'Copy'; }, 2000); }, function (error) { button.innerText = 'Error'; });  });  var pre = codeBlock.parentNode;  if (pre.parentNode.classList.contains('highlight')) {   var highlight = pre.parentNode; highlight.parentNode.insertBefore(button, highlight);  } else { pre.parentNode.insertBefore(button, pre); } });}
+if (navigator && navigator.clipboard) { addCopyButtons(navigator.clipboard);} else { var script = document.createElement('script'); script.src = '//cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/2.7.0/clipboard-polyfill.promise.js'; script.integrity = 'sha256-waClS2re9NUbXRsryKoof+F9qc1gjjIhc2eT7ZbIv94='; script.crossOrigin = 'anonymous'; script.onload = function() {addCopyButtons(clipboard);}; document.body.appendChild(script);} }</script>
+    <script src="https://io.yupiik.hcms.github.io/hcms/js/minisite.js?v=1.0.0-SNAPSHOT"></script>
+    <script>$('.page-content-body').generatedNavMenu();</script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.3/fuse.min.js" integrity="sha512-neoBxVNv0UMXjoilAYGxfWrSsW6iAVclx7vQKdPJ9Peet1bM5YQjU0aIB8LtH8iNPa+pAyMZprBBw2ZQ/Q1LjQ==" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Configuration</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple and powerful headeless CMS.">
+    <meta name="author" content="Yupiik Minisite Generator">
+    <meta name="generator" content="Yupiik Minisite Generator">
+    <meta name="keywords" content="configuration, json-rpc, documentation">
+
+    <link rel="shortcut icon" href="//www.yupiik.io/images/favicon.png">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.5-5/css/asciidoctor.min.css" integrity="sha512-kI7tn5cuEg16kMeXnYmg8rEJPxbxzEM7Gsr191iQdLDevFBLXPCSU9aZWSVuP61tMZWU3nBAR1cJ7SmXnOGLZw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/vs2015.min.css" integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ==" crossorigin="anonymous" />
+    
+    <link id="theme-style" rel="stylesheet" href="https://io.yupiik.hcms.github.io/hcms/css/theme.css?v=1.0.0-SNAPSHOT">
+</head>
+<body>
+    <header class="header fixed-top">
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+	                <div class="site-logo"><a title="Home" class="navbar-brand" href="https://io.yupiik.hcms.github.io/hcms/index.html">
+	                <img class="logo-icon mr-2" src="//www.yupiik.io/images/favicon.png" alt="logo">
+	                <span class="logo-text">HCMS <span class="text-alt">Docs</span></span></a></div>
+                </div>
+	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+					
+					<li class="list-inline-item"><a title="Search" id="search-button" href="#" data-toggle="modal" data-target="#searchModal"><i data-toggle="tooltip" data-placement="top" title="Search" class="fas fa-search"></i></a></li>
+
+					<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						
+						<li class="list-inline-item"><a title="Github" href="https://www.github.com/yupiik/"><i class="fab fa-github fa-fw"></i></a></li><li class="list-inline-item"><a title="LinkedIn" href="https://www.linkedin.com/company/yupiik/"><i class="fab fa-linkedin fa-fw"></i></a></li>
+		            </ul>
+	            </div>
+            </div>
+        </div>
+    </header>
+	<div class="page">
+        <div class="page-navigation-left">
+            <h3>Menu</h3>
+            <ul>
+                <li>
+                    <a title="Getting Started" href="https://io.yupiik.hcms.github.io/hcms/getting-started.html">
+                        <i class="fas fa-desktop"></i>Getting Started
+                    </a>
+                </li>                <li>
+                    <a title="JSON-RPC API" href="https://io.yupiik.hcms.github.io/hcms/json-rpc.html">
+                        <i class="fas fa-laptop-house"></i>JSON-RPC
+                    </a>
+                </li>                <li>
+                    <a title="Configuration" href="https://io.yupiik.hcms.github.io/hcms/configuration.html">
+                        <i class="fas fa-code"></i>Configuration
+                    </a>
+                </li>                <li>
+                    <a title="Deployment" href="https://io.yupiik.hcms.github.io/hcms/deployment.html">
+                        <i class="fas fa-space-shuttle"></i>Deployment
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="configuration-html-container" class="container page-content configuration-html">
+            <nav aria-label="breadcrumb" style="padding-left: 0;">
+  <ol class="breadcrumb" style="margin-left: 0;background-color: unset;padding-left: 0;">
+    <li class="breadcrumb-item"><a href="/"><svg viewBox="0 0 24 24" style="height: 1.4rem;position: relative;top: 1px;vertical-align: top;width: 1.1rem;"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li>
+    <li class="breadcrumb-item active" aria-current="page">Configuration</li>
+  </ol>
+</nav>            <div class="page-header">
+                <h1>Configuration</h1>
+            </div>
+            <div class="page-content-body">
+                <div class="paragraph">
+ <p>This page is about HCMS setup, if you are looking for the API configuration, please have a look to  <a href="model.html">model</a>
+ documentation.</p>
+ </div>
+ <div class="paragraph">
+ <p>
+Here is the application configuration:
+ </p>
+ </div>
+ <div class="paragraph">
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>generate-frisby-skeleton.output</code> (env: <code>GENERATE_FRISBY_SKELETON_OUTPUT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Where to generate the skeleton (<code>generate-frisby-skeleton</code> command only). Default: <code>hcms-frisby</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database-init.enabled</code> (env: <code>HCMS_DATABASE_INIT_ENABLED</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should database be initialized at startup. Default: <code>true</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database-init.ignoreErrors</code> (env: <code>HCMS_DATABASE_INIT_IGNOREERRORS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>When <code>enabled</code> is <code>true</code>, should errors be ignored if any. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database-init.scripts</code> (env: <code>HCMS_DATABASE_INIT_SCRIPTS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Classpath scripts to use to seed the database if create is <code>true</code>. Default: <code>java.util.List.of(&quot;ddl/01-create-database.h2.sql&quot;)</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.defaultAutoCommit</code> (env: <code>HCMS_DATABASE_DEFAULTAUTOCOMMIT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should autocommit be used. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.driver</code> (env: <code>HCMS_DATABASE_DRIVER</code>)</p>
+ </div>
+</dt>
+  <dd>
+JDBC driver to use to get connections.</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.logAbandoned</code> (env: <code>HCMS_DATABASE_LOGABANDONED</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should abandons be logged. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.maxActive</code> (env: <code>HCMS_DATABASE_MAXACTIVE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Max active connections. Default: <code>100</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.minEvictableIdleTime</code> (env: <code>HCMS_DATABASE_MINEVICTABLEIDLETIME</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Timeout before any eviction test for a connection. Default: <code>60000</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.minIdle</code> (env: <code>HCMS_DATABASE_MINIDLE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Min number of connection - even when nothing happens. Default: <code>2</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.password</code> (env: <code>HCMS_DATABASE_PASSWORD</code>)</p>
+ </div>
+</dt>
+  <dd>
+Database password.</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.removeAbandoned</code> (env: <code>HCMS_DATABASE_REMOVEABANDONED</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should detected as abandonned connections be dropped. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.removeAbandonedTimeout</code> (env: <code>HCMS_DATABASE_REMOVEABANDONEDTIMEOUT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Abandon timeout. Default: <code>60</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.testOnBorrow</code> (env: <code>HCMS_DATABASE_TESTONBORROW</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should connections be tested when retrieved from the pool. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.testOnReturn</code> (env: <code>HCMS_DATABASE_TESTONRETURN</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should connections be tested when returning to the pool. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.testWhileIdle</code> (env: <code>HCMS_DATABASE_TESTWHILEIDLE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should connections be tested when not used and in the pool. Default: <code>true</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.timeBetweenEvictionRuns</code> (env: <code>HCMS_DATABASE_TIMEBETWEENEVICTIONRUNS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Timeout (ms) between connection tests. Default: <code>5000</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.url</code> (env: <code>HCMS_DATABASE_URL</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>JDBC URL. Can be set to <code>-</code> for commands other than <code>serve</code> to ignore database provisioning/init.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.username</code> (env: <code>HCMS_DATABASE_USERNAME</code>)</p>
+ </div>
+</dt>
+  <dd>
+Database username.</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.validationQuery</code> (env: <code>HCMS_DATABASE_VALIDATIONQUERY</code>)</p>
+ </div>
+</dt>
+  <dd>
+Test query for eviction - if not set the driver one is used.</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.database.validationQueryTimeout</code> (env: <code>HCMS_DATABASE_VALIDATIONQUERYTIMEOUT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Default timeout for validations. Default: <code>30</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.devMode</code> (env: <code>HCMS_DEVMODE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should dev mode be enabled, ie reload the model on read if it changed. Default: <code>true</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.disabledRenderers</code> (env: <code>HCMS_DISABLEDRENDERERS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>List of disabled renderers (<code>findById</code>/<code>findAll</code> methods). Default: <code>java.util.List.of()</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.maxBulkRequest</code> (env: <code>HCMS_MAXBULKREQUEST</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Max bulk size, i.e. how many requests can be sent at once to be executed in the same transaction. Default: <code>50</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.modelLocation</code> (env: <code>HCMS_MODELLOCATION</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Path of the model to deploy. Default: <code>conf/model.json</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.password.algorithm</code> (env: <code>HCMS_PASSWORD_ALGORITHM</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Algorithm to use for password hashing. Default: <code>PBKDF2WithHmacSHA256</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.password.iterations</code> (env: <code>HCMS_PASSWORD_ITERATIONS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Number of iterations to use for password hashing. Default: <code>310_000</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.password.key-length</code> (env: <code>HCMS_PASSWORD_KEY_LENGTH</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Key length to use for password hashing. Default: <code>512</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.password.salt-length</code> (env: <code>HCMS_PASSWORD_SALT_LENGTH</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Salt length to use for password hashing. Default: <code>16</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.accessValidity</code> (env: <code>HCMS_SECURITY_ACCESSVALIDITY</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Access token validity for date validation (in seconds). Default: <code>900</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.algorithm</code> (env: <code>HCMS_SECURITY_ALGORITHM</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>JWT algorithm. Default: <code>RS256</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.issuer</code> (env: <code>HCMS_SECURITY_ISSUER</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>JWT issuer. Default: <code> <a href="https://hcms.yupiik.io/token/" class="inline-code">https://hcms.yupiik.io/token/</a>
+</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.alg</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_ALG</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.crv</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_CRV</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.e</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_E</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.kid</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_KID</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.kty</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_KTY</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.n</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_N</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.use</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_USE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.x</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_X</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.x5c</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_X5C</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.keys.$index.y</code> (env: <code>HCMS_SECURITY_KEYS_INDEX_Y</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p></p>
+ </div>
+</dd>
+ </dl>
+ <dl>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.kid</code> (env: <code>HCMS_SECURITY_KID</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Active (signer) kid, must be found in <code>keys</code> to be able to validate it properly. Default: <code>k0001</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.privateKey</code> (env: <code>HCMS_SECURITY_PRIVATEKEY</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>RSA PEM (private key) - ensure to set the certificate in <code>keys</code> with the right <code>kid</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.refreshValidity</code> (env: <code>HCMS_SECURITY_REFRESHVALIDITY</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Refresh token validity for date validation (in seconds). Default: <code>28_800L</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>hcms.security.tolerance</code> (env: <code>HCMS_SECURITY_TOLERANCE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Tolerance for date validation (in seconds). Default: <code>30</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.accumulator-buffer-size</code> (env: <code>TRACING_ACCUMULATOR_BUFFER_SIZE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>How many spans can stay in memory before a forced flush. Default: <code>2_048</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.enabled</code> (env: <code>TRACING_ENABLED</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Is the tracing enabled. Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.flush-timeout</code> (env: <code>TRACING_FLUSH_TIMEOUT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>How often to force a zipkin flush. Ignored if negative. Default: <code>20_000L</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.headers-span</code> (env: <code>TRACING_HEADERS_SPAN</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Zipkin span header name. Default: <code>X-B3-SpanId</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.headers-trace</code> (env: <code>TRACING_HEADERS_TRACE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Zipkin trace header name. Default: <code>X-B3-TraceId</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.operation</code> (env: <code>TRACING_OPERATION</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Is the tracing enabled. Default: <code>zipkin-client</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.service</code> (env: <code>TRACING_SERVICE</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Zipkin service name. Default: <code>zipkin-client</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.skip-tls-checks</code> (env: <code>TRACING_SKIP_TLS_CHECKS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Should all SSL connections be supported over HTTPS (testing only). Default: <code>false</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.timeout-connect</code> (env: <code>TRACING_TIMEOUT_CONNECT</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Connect timeout to Zipkin server. Default: <code>20_000L</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.timeout-request</code> (env: <code>TRACING_TIMEOUT_REQUEST</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Request timeout to Zipkin server. Default: <code>20_000L</code>.</p>
+ </div>
+</dd>
+  <dt> <div class="paragraph">
+ <p><code>tracing.urls</code> (env: <code>TRACING_URLS</code>)</p>
+ </div>
+</dt>
+  <dd>
+ <div class="paragraph">
+ <p>Zipkin URL(s) - a single successful call is kept but it enables failover. Default: <code>java.util.List.of()</code>.</p>
+ </div>
+</dd>
+ </dl>
+ </div>
+                
+                <nav class="page-footer-nav" aria-label="Docs pages">
+    <a href="installation.html" class="page-footer-nav-link-prev">
+    <div>Previous</div>
+    <div>Installation</div>
+</a>
+    <a href="json-rpc.html" class="page-footer-nav-link-next">
+    <div>Next</div>
+    <div>JSON-RPC</div>
+</a>
+</nav>
+            </div>
+        </div>
+    <div class="page-navigation-right">
+        <h3>Navigation</h3>
+        <nav class="generated-nav-menu"></nav>
+    </div>
+    </div>
+    <footer class="footer pb-5">
+	    <div class="text-center">
+		    <ul class="social-list list-unstyled">
+                <li class="list-inline-item"><a title="Github" href="https://www.github.com/yupiik/"><i class="fab fa-github fa-fw"></i></a></li><li class="list-inline-item"><a title="LinkedIn" href="https://www.linkedin.com/company/yupiik/"><i class="fab fa-linkedin fa-fw"></i></a></li>
+	        </ul>
+            <small class="copyright">Yupiik HCMS</small> | <a href="https://www.yupiik.com/terms-of-use/">Terms of use</a> | <a href="https://www.yupiik.com/privacy-policy/">Privacy policy</a>
+	    </div>
+    </footer>
+
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="return false;" class="form-inline">
+          <div class="form-group">
+            <label for="searchInput"><b>Search: </b></label>
+            <input class="form-control" id="searchInput" placeholder="Enter search text and hit enter...">
+          </div>
+        </form>
+        <div class="search-hits"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js" integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js" integrity="sha512-d00ajEME7cZhepRqSIVsQVGDJBdZlfHyQLNC6tZXYKTG7iwcF8nhlFuppanz8hYgXr8VvlfKh4gLC25ud3c90A==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/bash.min.js" integrity="sha512-Hg0ufGEvn0AuzKMU0psJ1iH238iUN6THh7EI0CfA0n1sd3yu6PYet4SaDMpgzN9L1yQHxfB3yc5ezw3PwolIfA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/bash.min.js" integrity="sha512-Hg0ufGEvn0AuzKMU0psJ1iH238iUN6THh7EI0CfA0n1sd3yu6PYet4SaDMpgzN9L1yQHxfB3yc5ezw3PwolIfA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/json.min.js" integrity="sha512-37sW1XqaJmseHAGNg4N4Y01u6g2do6LZL8tsziiL5CMXGy04Th65OXROw2jeDeXLo5+4Fsx7pmhEJJw77htBFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/dockerfile.min.js" integrity="sha512-eRNl3ty7GOJPBN53nxLgtSSj2rkYj5/W0Vg0MFQBw8xAoILeT6byOogENHHCRRvHil4pKQ/HbgeJ5DOwQK3SJA==" crossorigin="anonymous"></script>
+    <script>if (!(window.minisite || {}).skipHighlightJs) { hljs.highlightAll();
+function addCopyButtons(clipboard) {
+  document.querySelectorAll('pre > code').forEach(function (codeBlock) {
+  var button = document.createElement('button');  button.className = 'copy-code-button';  button.type = 'button';  button.innerText = 'Copy';  button.addEventListener('click', function () {   clipboard.writeText(codeBlock.innerText).then(function () {   button.blur();   button.innerText = 'Copied!';   setTimeout(function () { button.innerText = 'Copy'; }, 2000); }, function (error) { button.innerText = 'Error'; });  });  var pre = codeBlock.parentNode;  if (pre.parentNode.classList.contains('highlight')) {   var highlight = pre.parentNode; highlight.parentNode.insertBefore(button, highlight);  } else { pre.parentNode.insertBefore(button, pre); } });}
+if (navigator && navigator.clipboard) { addCopyButtons(navigator.clipboard);} else { var script = document.createElement('script'); script.src = '//cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/2.7.0/clipboard-polyfill.promise.js'; script.integrity = 'sha256-waClS2re9NUbXRsryKoof+F9qc1gjjIhc2eT7ZbIv94='; script.crossOrigin = 'anonymous'; script.onload = function() {addCopyButtons(clipboard);}; document.body.appendChild(script);} }</script>
+    <script src="https://io.yupiik.hcms.github.io/hcms/js/minisite.js?v=1.0.0-SNAPSHOT"></script>
+    <script>$('.page-content-body').generatedNavMenu();</script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.3/fuse.min.js" integrity="sha512-neoBxVNv0UMXjoilAYGxfWrSsW6iAVclx7vQKdPJ9Peet1bM5YQjU0aIB8LtH8iNPa+pAyMZprBBw2ZQ/Q1LjQ==" crossorigin="anonymous"></script>
+
+</body>
+</html>
