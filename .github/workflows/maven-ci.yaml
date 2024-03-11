@@ -49,7 +49,7 @@ jobs:
          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
      - uses: actions/upload-pages-artifact@v3.0.1
        with:
-         path: $GITHUB_WORKSPACE/target/__site
+         path: target/__site
      - id: deployment
        uses: actions/deploy-pages@v4.0.4
      - name: Remove Snapshots Before Caching
