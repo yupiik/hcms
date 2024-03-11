@@ -41,6 +41,6 @@ jobs:
          java-version: '21'
          cache: 'maven'
      - name: Deploy-Documentation
-       run: mvn package -Pgh-pages -e -DskipTests
+       run: mvn package -s .github/settings.xml -Pgh-pages -e -DskipTests
      - name: Remove Snapshots Before Caching
        run: find ~/.m2/repository -name '*SNAPSHOT' | xargs rm -Rf
