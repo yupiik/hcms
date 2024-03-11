@@ -16,8 +16,7 @@
     under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -89,9 +88,7 @@
     <tomcat.version>10.1.19</tomcat.version>
 
     <!-- Image related configuration -->
-    <image.base>
-      azul/zulu-openjdk-alpine:21.0.1@sha256:d45f86fffd7ccd63839d0518f7aa69dd8c8e1703e2c9b6a62dabb813300946cd
-    </image.base>
+    <image.base>azul/zulu-openjdk-alpine:21.0.1@sha256:d45f86fffd7ccd63839d0518f7aa69dd8c8e1703e2c9b6a62dabb813300946cd</image.base>
     <image.workdir>/opt/yupiik/${project.artifactId}</image.workdir>
     <image.version>${project.version}</image.version>
     <image.name>ossyupiik/${project.artifactId}:${image.version}</image.name>
@@ -103,16 +100,13 @@
 
     <!-- test/demo data -->
     <rsa.kid>k001</rsa.kid>
-    <rsa.privateKey>
-      MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJVadEdJh+Gds6RtZZv937FJPS4XdYm3BMSSIiFFZPqeYwQeKiqGkEo65PFdeD7mmmPZo8tiZX43lN9cZiJgygLAGCknPuocSaf0/rpLdi78L+0XRTWIrY0y5tWMnNcD1bmEpWyl5x50FT6JW3etGfFfpQrAHSOkgd2R+V19FwjzAgMBAAECgYAR3hITxoUzWurMh1Xk6o33UfwNZpBmMEypY5N3stXuHEKw5xbuTXjiQyzJKgB3rfOBxzNkN9pNK5hrfEyvsi/tzgwjp9V8ApbmotiYViPLtiST3WILpApbNI6/dP0iM98t29RfXBrRaEWD709CreO5S11FWBkU+2a8+hyYz7GE2QJBALUQulTj5p2QeUDEuqBI+vOwvIOfngHExkt9n8UnHlbdWHCJib2QxHjiAVDb4DHYog5KT28eMT2acFItom9NX88CQQDTKfHMoEMWUS3zTVKRq9pidCGn/eRi33EC1wRlijs0u/t/uKbYdnmTAt1I8AXOe2FZeiQo5YfHSj15TGcNqwmdAkEAlx0m5cJurgHtsIh/2VYPW2Kdcpy8mm1HsaletoQ3ZffF3+Zp9rPjxZ+ZyYo4SmGqnpKWSP7BydAi/fLoJkxFMQJAaDKzaWjPkeyfAwbtroohqiFqFi5Xi158so0NU1mhm4UDNmQUmI3lseBg90PRabFCOVfnDfMtS+7bZMaJt5nllQJAaCcR5CoWgqEIHijv0PK0SjmlVRzU5lwRMMi636E6o/gNxnY9tav+GCK9phuTYyrW6BPtbDJvz2N4hVtyTWZW2Q==
-    </rsa.privateKey>
+    <rsa.privateKey>MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJVadEdJh+Gds6RtZZv937FJPS4XdYm3BMSSIiFFZPqeYwQeKiqGkEo65PFdeD7mmmPZo8tiZX43lN9cZiJgygLAGCknPuocSaf0/rpLdi78L+0XRTWIrY0y5tWMnNcD1bmEpWyl5x50FT6JW3etGfFfpQrAHSOkgd2R+V19FwjzAgMBAAECgYAR3hITxoUzWurMh1Xk6o33UfwNZpBmMEypY5N3stXuHEKw5xbuTXjiQyzJKgB3rfOBxzNkN9pNK5hrfEyvsi/tzgwjp9V8ApbmotiYViPLtiST3WILpApbNI6/dP0iM98t29RfXBrRaEWD709CreO5S11FWBkU+2a8+hyYz7GE2QJBALUQulTj5p2QeUDEuqBI+vOwvIOfngHExkt9n8UnHlbdWHCJib2QxHjiAVDb4DHYog5KT28eMT2acFItom9NX88CQQDTKfHMoEMWUS3zTVKRq9pidCGn/eRi33EC1wRlijs0u/t/uKbYdnmTAt1I8AXOe2FZeiQo5YfHSj15TGcNqwmdAkEAlx0m5cJurgHtsIh/2VYPW2Kdcpy8mm1HsaletoQ3ZffF3+Zp9rPjxZ+ZyYo4SmGqnpKWSP7BydAi/fLoJkxFMQJAaDKzaWjPkeyfAwbtroohqiFqFi5Xi158so0NU1mhm4UDNmQUmI3lseBg90PRabFCOVfnDfMtS+7bZMaJt5nllQJAaCcR5CoWgqEIHijv0PK0SjmlVRzU5lwRMMi636E6o/gNxnY9tav+GCK9phuTYyrW6BPtbDJvz2N4hVtyTWZW2Q==</rsa.privateKey>
     <rsa.publicCertificate>-----BEGIN PUBLIC KEY-----
       MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCVWnRHSYfhnbOkbWWb/d+
       xST0uF3WJtwTEkiIhRWT6nmMEHioqhpBKOuTxXXg+5ppj2aPLYmV+N5TfXG
       YiYMoCwBgpJz7qHEmn9P66S3Yu/C/tF0U1iK2NMubVjJzXA9W5hKVspeced
       BU+iVt3rRnxX6UKwB0jpIHdkfldfRcI8wIDAQAB
-      -----END PUBLIC KEY-----
-    </rsa.publicCertificate>
+      -----END PUBLIC KEY-----</rsa.publicCertificate>
   </properties>
 
   <dependencies>
@@ -279,9 +273,7 @@
             <preAction>
               <type>io.yupiik.fusion.documentation.OpenRpcGenerator</type>
               <configuration>
-                <output>
-                  ${project.basedir}/src/main/minisite/content/_partials/generated/${project.artifactId}.openrpc.json
-                </output>
+                <output>${project.basedir}/src/main/minisite/content/_partials/generated/${project.artifactId}.openrpc.json</output>
                 <title>${project.name} API</title>
               </configuration>
             </preAction>
@@ -289,20 +281,14 @@
               <type>io.yupiik.fusion.documentation.OpenRPC2Adoc</type>
               <configuration>
                 <input>${project.build.outputDirectory}/META-INF/fusion/jsonrpc/openrpc.json</input>
-                <output>
-                  ${project.basedir}/src/main/minisite/content/_partials/generated/${project.artifactId}.openrpc.adoc
-                </output>
+                <output>${project.basedir}/src/main/minisite/content/_partials/generated/${project.artifactId}.openrpc.adoc</output>
               </configuration>
             </preAction>
             <preAction>
               <type>copy</type>
               <configuration>
-                <from>
-                  ${project.basedir}/src/main/minisite/content/_partials/generated/deployment/placeholders.completion.properties
-                </from>
-                <to>
-                  ${project.build.directory}/${project.build.finalName}/completion/placeholders.completion.properties
-                </to>
+                <from>${project.basedir}/src/main/minisite/content/_partials/generated/deployment/placeholders.completion.properties</from>
+                <to>${project.build.directory}/${project.build.finalName}/completion/placeholders.completion.properties</to>
               </configuration>
             </preAction>
             <preAction>
@@ -328,7 +314,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.7.0</version>
         <executions>
           <execution>
             <id>bundlebee</id>
@@ -371,10 +357,10 @@
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>io.yupiik.fusion.framework.api.main.Launcher</mainClass>
                 </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                <transformer implementation="io.yupiik.maven.shade.transformer.FusionDocumentationTransformer"/>
-                <transformer implementation="io.yupiik.maven.shade.transformer.FusionJsonSchemaTransformer"/>
-                <transformer implementation="io.yupiik.maven.shade.transformer.FusionOpenRPCTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionDocumentationTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionJsonSchemaTransformer" />
+                <transformer implementation="io.yupiik.maven.shade.transformer.FusionOpenRPCTransformer" />
               </transformers>
               <filters>
                 <filter>
@@ -406,8 +392,7 @@
           <manifest>${project.basedir}/src/main/bundlebee/manifest.json</manifest>
           <alveolus>${bundlebee.alveolus}</alveolus>
           <mavenRepositoriesDownloadsEnabled>true</mavenRepositoriesDownloadsEnabled>
-          <mavenRepositoriesSnapshot>https://oss.sonatype.org/content/repositories/snapshots/
-          </mavenRepositoriesSnapshot>
+          <mavenRepositoriesSnapshot>https://oss.sonatype.org/content/repositories/snapshots/</mavenRepositoriesSnapshot>
           <kubeVerbose>${bundlebee.kube.verbose}</kubeVerbose>
           <kubeNamespace>${bundlebee.namespace}</kubeNamespace>
           <skipPackaging>
@@ -560,8 +545,7 @@
         <version>3.2.3</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
-          <statelessTestsetInfoReporter
-              implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
+          <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter" />
           <systemPropertyVariables>
             <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
 
@@ -582,9 +566,7 @@
             <hcms.security.keys.0.use>sig</hcms.security.keys.0.use>
             <hcms.security.keys.0.kty>RSA</hcms.security.keys.0.kty>
             <hcms.security.keys.0.alg>RS256</hcms.security.keys.0.alg>
-            <hcms.security.keys.0.n>
-              MTA0ODc5NDc5NzU2ODk3NjYyOTI0ODM4MjY5Njg4MDM3NjE4NDYxNDI2NDE0Mzg3NDk1ODYyODcwNDYxMzk2ODg3ODM4NDc0OTczNDgxMjE5MDA0NzkxNTM3NTMzNTgxODg5NDQ2NTQwODA3NzQwMjcyNTY0MDMzNDU0OTEwNTM3OTE3MTYyOTA3NTA0MTc0ODQxMDg4ODQ2MDYwNTExNzYzODUzNjE2MTA1MjYyMDYxNDYyMDk1NzQxODA4MjI5MjczNjk0MTYyMzYyODc4MjAyNjAzOTczOTg5NzkxMDg0MTc3MjQ5MDkxMzE5NzE2ODczMDk5Njk3ODQ4NzczMTMwNTA1NzU1MDE1NDM5MzA4ODc0ODk3NDI0OTkxODMyNzYzNDEyMjQ4MDI2MzAxMjcwMjU5
-            </hcms.security.keys.0.n>
+            <hcms.security.keys.0.n>MTA0ODc5NDc5NzU2ODk3NjYyOTI0ODM4MjY5Njg4MDM3NjE4NDYxNDI2NDE0Mzg3NDk1ODYyODcwNDYxMzk2ODg3ODM4NDc0OTczNDgxMjE5MDA0NzkxNTM3NTMzNTgxODg5NDQ2NTQwODA3NzQwMjcyNTY0MDMzNDU0OTEwNTM3OTE3MTYyOTA3NTA0MTc0ODQxMDg4ODQ2MDYwNTExNzYzODUzNjE2MTA1MjYyMDYxNDYyMDk1NzQxODA4MjI5MjczNjk0MTYyMzYyODc4MjAyNjAzOTczOTg5NzkxMDg0MTc3MjQ5MDkxMzE5NzE2ODczMDk5Njk3ODQ4NzczMTMwNTA1NzU1MDE1NDM5MzA4ODc0ODk3NDI0OTkxODMyNzYzNDEyMjQ4MDI2MzAxMjcwMjU5</hcms.security.keys.0.n>
             <hcms.security.keys.0.e>NjU1Mzc=</hcms.security.keys.0.e>
             <hcms.security.keys.0.x5c>${rsa.publicCertificate}</hcms.security.keys.0.x5c>
           </systemPropertyVariables>
@@ -688,8 +670,8 @@
                 <include>.gitattributes</include>
                 <include>.gitignore</include>
               </includes>
-              <trimTrailingWhitespace/>
-              <endWithNewline/>
+              <trimTrailingWhitespace />
+              <endWithNewline />
               <indent>
                 <tabs>true</tabs>
                 <spacesPerTab>4</spacesPerTab>
@@ -725,7 +707,7 @@
             <palantirJavaFormat>
               <version>2.40.0</version>
             </palantirJavaFormat>
-            <removeUnusedImports/>
+            <removeUnusedImports />
           </java>
           <pom>
             <sortPom>
