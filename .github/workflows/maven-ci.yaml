@@ -29,6 +29,8 @@ jobs:
    if: github.ref == 'refs/heads/main'
    name: Documentation
    runs-on: ubuntu-20.04
+   permissions:
+     contents: write
    steps:
      - name: Clone
        id: clone
