@@ -37,7 +37,7 @@
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>https://github.com/yupiik/fusion/blob/master/LICENSE</url>
+      <url>https://github.com/yupiik/hcms/blob/main/LICENSE</url>
       <distribution>may be downloaded from the Maven repository</distribution>
     </license>
   </licenses>
@@ -81,7 +81,7 @@
   <properties>
     <!-- Main Dependencies -->
     <junit5.version>5.10.0</junit5.version>
-    <yupiik-fusion.version>1.0.15-SNAPSHOT</yupiik-fusion.version>
+    <yupiik-fusion.version>1.0.16</yupiik-fusion.version>
     <yupiik-tools.version>1.2.1</yupiik-tools.version>
     <yupiik-bundlebee.version>1.0.25</yupiik-bundlebee.version>
     <yupiik-logging.version>1.0.7</yupiik-logging.version>
