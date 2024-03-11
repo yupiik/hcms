@@ -98,6 +98,8 @@
     <bundlebee.environment>default</bundlebee.environment>
     <bundlebee.alveolus>hcms</bundlebee.alveolus>
 
+    <site.local>${project.build.directory}/${project.build.finalName}</site.local>
+
     <!-- test/demo data -->
     <rsa.kid>k001</rsa.kid>
     <rsa.privateKey>MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJVadEdJh+Gds6RtZZv937FJPS4XdYm3BMSSIiFFZPqeYwQeKiqGkEo65PFdeD7mmmPZo8tiZX43lN9cZiJgygLAGCknPuocSaf0/rpLdi78L+0XRTWIrY0y5tWMnNcD1bmEpWyl5x50FT6JW3etGfFfpQrAHSOkgd2R+V19FwjzAgMBAAECgYAR3hITxoUzWurMh1Xk6o33UfwNZpBmMEypY5N3stXuHEKw5xbuTXjiQyzJKgB3rfOBxzNkN9pNK5hrfEyvsi/tzgwjp9V8ApbmotiYViPLtiST3WILpApbNI6/dP0iM98t29RfXBrRaEWD709CreO5S11FWBkU+2a8+hyYz7GE2QJBALUQulTj5p2QeUDEuqBI+vOwvIOfngHExkt9n8UnHlbdWHCJib2QxHjiAVDb4DHYog5KT28eMT2acFItom9NX88CQQDTKfHMoEMWUS3zTVKRq9pidCGn/eRi33EC1wRlijs0u/t/uKbYdnmTAt1I8AXOe2FZeiQo5YfHSj15TGcNqwmdAkEAlx0m5cJurgHtsIh/2VYPW2Kdcpy8mm1HsaletoQ3ZffF3+Zp9rPjxZ+ZyYo4SmGqnpKWSP7BydAi/fLoJkxFMQJAaDKzaWjPkeyfAwbtroohqiFqFi5Xi158so0NU1mhm4UDNmQUmI3lseBg90PRabFCOVfnDfMtS+7bZMaJt5nllQJAaCcR5CoWgqEIHijv0PK0SjmlVRzU5lwRMMi636E6o/gNxnY9tav+GCK9phuTYyrW6BPtbDJvz2N4hVtyTWZW2Q==</rsa.privateKey>
@@ -254,6 +256,7 @@
         <artifactId>yupiik-tools-maven-plugin</artifactId>
         <version>${yupiik-tools.version}</version>
         <configuration>
+          <target>${site.local}</target>
           <siteBase>https://www.yupiik.io/hcms</siteBase>
           <logoText>HCMS</logoText>
           <indexText>HCMS</indexText>
@@ -288,7 +291,7 @@
               <type>copy</type>
               <configuration>
                 <from>${project.basedir}/src/main/minisite/content/_partials/generated/deployment/placeholders.completion.properties</from>
-                <to>${project.build.directory}/${project.build.finalName}/completion/placeholders.completion.properties</to>
+                <to>${site.local}/completion/placeholders.completion.properties</to>
               </configuration>
             </preAction>
             <preAction>
@@ -746,6 +749,7 @@
 
       <properties>
         <minisite.serverId>github.com</minisite.serverId>
+        <site.local>${project.build.directory}/__site</site.local>
       </properties>
 
       <build>
@@ -762,7 +766,7 @@
                 <phase>package</phase>
                 <configuration>
                   <git>
-                    <ignore>false</ignore>
+                    <ignore>true</ignore>
                     <noJekyll>true</noJekyll>
                     <serverId>${minisite.serverId}</serverId>
                     <branch>refs/heads/gh-pages</branch>
