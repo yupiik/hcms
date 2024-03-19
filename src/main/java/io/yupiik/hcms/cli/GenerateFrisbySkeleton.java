@@ -118,7 +118,7 @@ public class GenerateFrisbySkeleton implements Runnable {
                         .sorted()
                         .collect(joining());
 
-        return "const { jsonrpcUrl, frisby, Joi /* , login */  } = require('../../env');\n" + "\n"
+        return "const { jsonRpc, Joi /* , frisby, login, jsonrpcUrl */  } = require('../../env');\n\n"
                 + "describe('"
                 + entity.name() + " entity', () => {\n"
                 + "    // IMPORTANT: assumes the entity has no initial provisioning,\n"
@@ -139,13 +139,13 @@ public class GenerateFrisbySkeleton implements Runnable {
                         ? findByIdMissing(entity, ids, properties)
                         : "")
                 + (create ? create(entity, createData) : "")
+                + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_BY_ID))
+                        ? findById(entity, idValues, createData)
+                        : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.UPDATE))
                         ? update(entity, ids, idValues, properties)
                         : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL)) ? findAllPage1(entity) : "")
-                + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_BY_ID))
-                        ? findById(entity, idValues, createData)
-                        : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL))
                         ? deleteById(entity, idValues)
                         : "");
@@ -165,7 +165,7 @@ public class GenerateFrisbySkeleton implements Runnable {
                         .sorted()
                         .collect(joining());
         return "\n" + "    it('"
-                + entity.name() + ".update', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".update', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".update',\n" + "            params: {\n"
@@ -175,7 +175,9 @@ public class GenerateFrisbySkeleton implements Runnable {
                 + "        .expect('status', 200)\n"
                 + "        .expectNot('json', 'error')\n"
                 + "        .expect('json', {\n"
+                + "            result: {\n"
                 + updateData
+                + "            },\n"
                 + "        })\n"
                 + "        .expect('jsonTypes', 'result', schema));\n";
     }
@@ -183,7 +185,7 @@ public class GenerateFrisbySkeleton implements Runnable {
     private String create(final Entity entity, final String createData) {
         return "\n" + "    let created;\n"
                 + "    it('"
-                + entity.name() + ".create', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".create', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".create',\n" + "            params: {\n"
@@ -199,14 +201,14 @@ public class GenerateFrisbySkeleton implements Runnable {
                 + "        .expect('json', {\n"
                 + "            result: {\n"
                 + createData
-                + "            }\n"
+                + "            },\n"
                 + "        })\n"
                 + "        .expect('jsonTypes', 'result', schema));\n";
     }
 
     private String deleteById(final Entity entity, final String idValues) {
         return "\n" + "    it('"
-                + entity.name() + ".deleteById', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".deleteById', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".deleteById',\n" + "            params: {\n"
@@ -222,7 +224,7 @@ public class GenerateFrisbySkeleton implements Runnable {
     private String findByIdMissing(
             final Entity entity, final Collection<String> ids, final Map<String, Model.JsonSchema> properties) {
         return "\n" + "    it('"
-                + entity.name() + ".findById not found', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".findById not found', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findById',\n" + "            params: {\n"
@@ -246,7 +248,7 @@ public class GenerateFrisbySkeleton implements Runnable {
 
     private String findById(final Entity entity, final String idValues, final String createData) {
         return "\n" + "    it('"
-                + entity.name() + ".findById not found', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".findById found', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findById',\n" + "            params: {\n"
@@ -256,13 +258,15 @@ public class GenerateFrisbySkeleton implements Runnable {
                 + "        .expect('status', 200)\n"
                 + "        .expectNot('json', 'error')\n"
                 + "        .expect('json', {\n"
+                + "            result: {\n"
                 + createData
-                + "        })\n";
+                + "            },\n"
+                + "        }));\n";
     }
 
     private String findAllPage1(final Entity entity) {
         return "\n" + "    it('"
-                + entity.name() + ".findAll page 1', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".findAll page 1', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findAll',\n" + "            params: {\n"
@@ -278,7 +282,7 @@ public class GenerateFrisbySkeleton implements Runnable {
 
     private String findAllEmpty(final Entity entity) {
         return "\n" + "    it('"
-                + entity.name() + ".findAll empty', () => frisby\n" + "        .jsonRpc({\n"
+                + entity.name() + ".findAll empty', () => jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findAll',\n" + "            params: {\n"
@@ -378,6 +382,18 @@ public class GenerateFrisbySkeleton implements Runnable {
 
                         const jsonrpcUrl = globalThis.HCMS_URL;
 
+                        const jsonRpc = body => frisby
+                            .post(jsonrpcUrl, { body: JSON.stringify(body) })
+                            .then(res => addMsg({
+                                message: JSON.stringify({
+                                    request: body,
+                                    response: {
+                                        status: res.status,
+                                        json: res.json,
+                                    },
+                                }, null, 2),
+                            }).then(() => res));
+
                         const cachedTokens = {};
                         async function login(params) {
                             const key = `${params.username}:${params.password}`;
@@ -386,8 +402,8 @@ public class GenerateFrisbySkeleton implements Runnable {
                                 return Promise.resolve(existing);
                             }
 
-                            return frisby
-                                .jsonRpc({
+                            return jsonRpc(
+                                {
                                     jsonrpc: '2.0',
                                     method: 'hcms.security.login',
                                     params,
@@ -402,20 +418,8 @@ public class GenerateFrisbySkeleton implements Runnable {
                         module.exports = {
                             jsonrpcUrl,
                             login,
-                            frisby: {
-                                ...frisby,
-                                jsonRpc: body => frisby
-                                    .jsonRpc({ body: JSON.stringify(body) })
-                                    .then(res => addMsg({
-                                        message: JSON.stringify({
-                                            request: body,
-                                            response: {
-                                                status: res.status,
-                                                json: res.json,
-                                            },
-                                        }, null, 2),
-                                    }).then(() => res)),
-                            },
+                            frisby,
+                            jsonRpc,
                             Joi: frisby.Joi,
                         };
                         """);
