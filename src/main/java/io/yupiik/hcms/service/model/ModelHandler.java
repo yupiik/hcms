@@ -1143,6 +1143,7 @@ public class ModelHandler {
 
         return switch (model.type().stream()
                 .filter(Objects::nonNull)
+                .filter(i -> i != nullValue)
                 .findFirst()
                 .orElse(string)) {
             case string -> model.format() == null
@@ -1383,7 +1384,11 @@ public class ModelHandler {
     private Stream<String> validateEntityProperty(final Model.JsonSchema prop) {
         return switch (prop.type() == null
                 ? nullValue
-                : prop.type().stream().filter(Objects::nonNull).findFirst().orElse(nullValue)) {
+                : prop.type().stream()
+                        .filter(Objects::nonNull)
+                        .filter(i -> i != nullValue)
+                        .findFirst()
+                        .orElse(nullValue)) {
             case nullValue, object, array -> Stream.of("Invalid property type, can't be '" + prop.type() + "'");
             default -> Stream.empty();
         };
