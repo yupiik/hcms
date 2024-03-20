@@ -37,6 +37,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -62,7 +64,8 @@ public class GenerateFrisbySkeleton implements Runnable {
 
     @Override
     public void run() {
-        final var jsonRpcMethods = model.get().jsonRpcMethods();
+        final var currentModel = model.get();
+        final var jsonRpcMethods = currentModel.jsonRpcMethods();
         if (jsonRpcMethods == null || jsonRpcMethods.isEmpty()) {
             throw new IllegalArgumentException("No jsonRpcMethods");
         }
@@ -88,7 +91,17 @@ public class GenerateFrisbySkeleton implements Runnable {
                         try {
                             final var target = output.resolve(entity.name() + ".spec.js");
                             Files.createDirectories(target.getParent());
-                            Files.writeString(target, generate(entity, methods));
+                            Files.writeString(
+                                    target,
+                                    generate(
+                                            // todo: refine security need, will mainly work for CRUD for now
+                                            jsonRpcMethods.stream()
+                                                    .filter(it -> Objects.equals(it.entityName(), entity.name()))
+                                                    .findFirst()
+                                                    .map(Model.JsonRpcMethod::security)
+                                                    .orElse(null),
+                                            entity,
+                                            methods));
                         } catch (final IOException e) {
                             throw new IllegalStateException(e);
                         }
@@ -98,7 +111,10 @@ public class GenerateFrisbySkeleton implements Runnable {
         }
     }
 
-    private String generate(final Entity entity, final Collection<Model.JsonRpcMethodType> methods) {
+    private String generate(
+            final Model.JsonRpcMethodSecurity spec,
+            final Entity entity,
+            final Collection<Model.JsonRpcMethodType> methods) {
         final var ids = entity.identifiers();
         final var properties = entity.schema().properties();
         final var idValues = ids.stream()
@@ -118,40 +134,41 @@ public class GenerateFrisbySkeleton implements Runnable {
                         .sorted()
                         .collect(joining());
 
-        return "const { jsonRpc, Joi /* , frisby, login, jsonrpcUrl */  } = require('../../env');\n\n"
+        return "const { jsonRpc, Joi /* , frisby, login, jsonrpcUrl */  } = require('../../env');\n"
+                + "const expects = require('frisby/src/frisby/expects');\n\n"
                 + "describe('"
                 + entity.name() + " entity', () => {\n"
                 + "    // IMPORTANT: assumes the entity has no initial provisioning,\n"
                 + "    //            the describe block enables us to run these tests sequentially\n"
                 + "    //            since they are actually chained in the skaffolding\n"
                 + "\n"
-                + "    // for now, if you need to call an endpoint in an authenticated fashion:\n"
-                + "    // 1. Ensure to provision an user using model.json\n"
-                + "    // 2. Use login() before calling frisby.post() and set the authorization header\n"
-                + "\n"
                 + "    const schema = {\n"
                 + properties.entrySet().stream()
                         .map(e -> "        '" + e.getKey() + "': " + joiConstraints(e.getValue()) + ",\n")
                         .collect(joining())
                 + "    };\n"
-                + (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL) ? findAllEmpty(entity) : "")
+                + (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL) ? findAllEmpty(spec, entity) : "")
                 + (crud || methods.contains(Model.JsonRpcMethodType.FIND_BY_ID)
-                        ? findByIdMissing(entity, ids, properties)
+                        ? findByIdMissing(spec, entity, ids, properties)
                         : "")
-                + (create ? create(entity, createData) : "")
+                + (create ? create(spec, entity, createData) : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_BY_ID))
-                        ? findById(entity, idValues, createData)
+                        ? findById(spec, entity, idValues, createData)
                         : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.UPDATE))
-                        ? update(entity, ids, idValues, properties)
+                        ? update(spec, entity, ids, idValues, properties)
                         : "")
-                + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL)) ? findAllPage1(entity) : "")
                 + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL))
-                        ? deleteById(entity, idValues)
-                        : "");
+                        ? findAllPage1(spec, entity)
+                        : "")
+                + (create && (crud || methods.contains(Model.JsonRpcMethodType.FIND_ALL))
+                        ? deleteById(spec, entity, idValues)
+                        : "")
+                + "});\n\n";
     }
 
     private String update(
+            final Model.JsonRpcMethodSecurity spec,
             final Entity entity,
             final Collection<String> ids,
             final String idValues,
@@ -164,67 +181,68 @@ public class GenerateFrisbySkeleton implements Runnable {
                         .map(it -> generateDataFor(it, false))
                         .sorted()
                         .collect(joining());
-        return "\n" + "    it('"
-                + entity.name() + ".update', () => jsonRpc({\n"
+        return "\n    it('"
+                + entity.name() + ".update', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
-                + entity.name() + ".update',\n" + "            params: {\n"
+                + entity.name() + ".update',\n            params: {\n"
                 + updateData
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', {\n"
-                + "            result: {\n"
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::update) + ");\n"
+                + "        expect(res.status).toBe(200)\n        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json.result)\n"
+                + "            .toEqual(expect.objectContaining({\n"
                 + updateData
-                + "            },\n"
-                + "        })\n"
-                + "        .expect('jsonTypes', 'result', schema));\n";
+                + "        }));\n"
+                + "        expects.jsonTypes(res, 'result', schema);\n    });\n";
     }
 
-    private String create(final Entity entity, final String createData) {
-        return "\n" + "    let created;\n"
+    private String create(final Model.JsonRpcMethodSecurity spec, final Entity entity, final String createData) {
+        return "\n    let created;\n"
                 + "    it('"
-                + entity.name() + ".create', () => jsonRpc({\n"
+                + entity.name() + ".create', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".create',\n" + "            params: {\n"
                 + createData
                 + "            },\n"
-                + "        })\n"
-                + "        .then(res => { // capture the result to get its id\n"
-                + "            created = res.json.result;\n"
-                + "            return res;\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', {\n"
-                + "            result: {\n"
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::create) + ");\n"
+                + "        expect(res.status).toBe(200)\n" + "        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json.result)\n"
+                + "            .toEqual(expect.objectContaining({\n"
                 + createData
-                + "            },\n"
-                + "        })\n"
-                + "        .expect('jsonTypes', 'result', schema));\n";
+                + "            }));\n"
+                + "        expects.jsonTypes(res, 'result', schema);\n"
+                + "        created = res.json.result;\n"
+                + "    });\n";
     }
 
-    private String deleteById(final Entity entity, final String idValues) {
-        return "\n" + "    it('"
-                + entity.name() + ".deleteById', () => jsonRpc({\n"
+    private String deleteById(final Model.JsonRpcMethodSecurity spec, final Entity entity, final String idValues) {
+        return "\n    it('"
+                + entity.name() + ".deleteById', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
-                + entity.name() + ".deleteById',\n" + "            params: {\n"
+                + entity.name() + ".deleteById',\n"
+                + "            params: {\n"
                 + idValues
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', 'result.success', true));\n"
-                + "});\n";
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::delete) + ");\n"
+                + "        expect(res.status).toBe(200)\n" + "        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json.result).toStrictEqual({ success: true });\n"
+                + "    });\n";
     }
 
     private String findByIdMissing(
-            final Entity entity, final Collection<String> ids, final Map<String, Model.JsonSchema> properties) {
-        return "\n" + "    it('"
-                + entity.name() + ".findById not found', () => jsonRpc({\n"
+            final Model.JsonRpcMethodSecurity spec,
+            final Entity entity,
+            final Collection<String> ids,
+            final Map<String, Model.JsonSchema> properties) {
+        return "\n    it('"
+                + entity.name() + ".findById not found', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findById',\n" + "            params: {\n"
@@ -240,59 +258,86 @@ public class GenerateFrisbySkeleton implements Runnable {
                         .sorted()
                         .collect(joining())
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'result')\n"
-                + "        .expect('json', 'error.code', 404));\n";
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::view) + ");\n"
+                + "        expect(res.status).toBe(200);\n"
+                + "        expect(res.json.result).toBeUndefined();\n"
+                + "        expect(res.json.error)\n" + "            .toEqual(expect.objectContaining({\n"
+                + "                code: 404,\n"
+                + "                message: 'Entity not found',\n"
+                + "            }));\n"
+                + "    });\n";
     }
 
-    private String findById(final Entity entity, final String idValues, final String createData) {
-        return "\n" + "    it('"
-                + entity.name() + ".findById found', () => jsonRpc({\n"
+    private String findById(
+            final Model.JsonRpcMethodSecurity spec,
+            final Entity entity,
+            final String idValues,
+            final String createData) {
+        return "\n    it('"
+                + entity.name() + ".findById found', async () => {\n" + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
                 + entity.name() + ".findById',\n" + "            params: {\n"
                 + idValues
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', {\n"
-                + "            result: {\n"
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::view) + ");\n"
+                + "        expect(res.status).toBe(200)\n" + "        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json.result)\n"
+                + "            .toEqual(expect.objectContaining({\n"
                 + createData
-                + "            },\n"
-                + "        }));\n";
+                + "            }));\n"
+                + "        expects.jsonTypes(res, 'result', schema);\n"
+                + "    });\n";
     }
 
-    private String findAllPage1(final Entity entity) {
-        return "\n" + "    it('"
-                + entity.name() + ".findAll page 1', () => jsonRpc({\n"
+    private String findAllPage1(final Model.JsonRpcMethodSecurity spec, final Entity entity) {
+        return "\n    it('"
+                + entity.name() + ".findAll empty', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
-                + entity.name() + ".findAll',\n" + "            params: {\n"
+                + entity.name() + ".findAll',\n"
+                + "            params: {\n"
                 + "                page: 1,\n"
                 + "                pageSize: 3,\n"
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', { result: { total: 1 } })\n"
-                + "        .expect('jsonTypes', 'result.items.*', schema));\n";
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::view) + ");\n"
+                + "        expect(res.status).toBe(200)\n"
+                + "        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json.result).toEqual(expect.objectContaining({ total: 1 }));\n"
+                + "        expects.jsonTypes(res, 'result.items.*', schema);\n"
+                + "    });\n";
     }
 
-    private String findAllEmpty(final Entity entity) {
-        return "\n" + "    it('"
-                + entity.name() + ".findAll empty', () => jsonRpc({\n"
+    private String findAllEmpty(final Model.JsonRpcMethodSecurity spec, final Entity entity) {
+        return "\n    it('"
+                + entity.name() + ".findAll empty', async () => {\n"
+                + "        const res = await jsonRpc({\n"
                 + "            jsonrpc: '2.0',\n"
                 + "            method: '"
-                + entity.name() + ".findAll',\n" + "            params: {\n"
+                + entity.name() + ".findAll',\n"
+                + "            params: {\n"
                 + "                page: 1,\n"
                 + "                pageSize: 3,\n"
                 + "            },\n"
-                + "        })\n"
-                + "        .expect('status', 200)\n"
-                + "        .expectNot('json', 'error')\n"
-                + "        .expect('json', { result: { total: 0, items: [] } }));\n";
+                + "        }" + authParam(spec, Model.JsonRpcMethodSecurity::view) + ");\n"
+                + "        expect(res.status).toBe(200)\n"
+                + "        expect(res.json.error).toBeUndefined();\n"
+                + "        expect(res.json).toStrictEqual({ jsonrpc: '2.0', result: { total: 0, items: [] } });\n"
+                + "    });\n";
+    }
+
+    private String authParam(
+            final Model.JsonRpcMethodSecurity spec,
+            final Function<Model.JsonRpcMethodSecurity, Model.SecurityValidation> validation) {
+        if (spec == null) {
+            return "";
+        }
+        final var security = validation.apply(spec);
+        if (security == null || security.anonymous()) {
+            return "";
+        }
+        return ", true"; // for now use admin
     }
 
     private String joiConstraints(final Model.JsonSchema schema) {
@@ -371,20 +416,26 @@ public class GenerateFrisbySkeleton implements Runnable {
                         const frisby = require('frisby');
                         const { addMsg } = require("jest-html-reporters/helper");
 
+                        // IMPORTANT: ensure to add "ddl/01-create-database.h2.sql" to model.sql#sql array
+                        //            or adjust this login default phase to your actual user dataset
+                        const admin = {
+                            username: 'admin@app.com',
+                            password: '@dm1n!',
+                        };
+
                         frisby.globalSetup({
                             request: {
                                 headers: {
                                     'accept': 'application/json',
-                                    'content-type': 'application/json',
                                 }
                             }
                         });
 
                         const jsonrpcUrl = globalThis.HCMS_URL;
 
-                        const jsonRpc = body => frisby
-                            .post(jsonrpcUrl, { body: JSON.stringify(body) })
-                            .then(res => addMsg({
+                        const plainJsonRpc = async (body, opts = {}) => {
+                            const res = await frisby.post(jsonrpcUrl, { body: JSON.stringify(body), ...opts });
+                            await addMsg({
                                 message: JSON.stringify({
                                     request: body,
                                     response: {
@@ -392,34 +443,48 @@ public class GenerateFrisbySkeleton implements Runnable {
                                         json: res.json,
                                     },
                                 }, null, 2),
-                            }).then(() => res));
+                            });
+                            return res;
+                        };
 
                         const cachedTokens = {};
-                        async function login(params) {
+                        async function login(params = admin) {
                             const key = `${params.username}:${params.password}`;
                             const existing = cachedTokens[key];
                             if (existing) { // assume the suite is executed within the token validation - should be ok
                                 return Promise.resolve(existing);
                             }
 
-                            return jsonRpc(
+                            const spec = await plainJsonRpc(
                                 {
                                     jsonrpc: '2.0',
                                     method: 'hcms.security.login',
                                     params,
-                                })
-                                .expect('status', 200)
-                                .then(spec => {
-                                    cachedTokens[key] = JSON.parse(spec.json);
-                                    return cachedTokens[key];
                                 });
+                            expect(spec.status).toBe(200);
+
+                            if (!spec.json || spec.json.error) {
+                                throw new Error(`Invalid login with user=${params.username}: ${JSON.stringify(spec.json, null, 2)}`);
+                            }
+
+                            cachedTokens[key] = spec.json;
+                            return cachedTokens[key];
                         }
+
+                        const jsonRpc = async (body, user) => {
+                            if (user) {
+                                const auth = await login(user === true ? admin : user);
+                                return plainJsonRpc(body, { headers: { authorization: `Bearer ${auth.result.access_token}` } });
+                            }
+                            return plainJsonRpc(body);
+                        };
 
                         module.exports = {
                             jsonrpcUrl,
                             login,
                             frisby,
                             jsonRpc,
+                            admin,
                             Joi: frisby.Joi,
                         };
                         """);
@@ -433,15 +498,35 @@ public class GenerateFrisbySkeleton implements Runnable {
                         const defaultCommand = process.env.HCMS_BINARY || 'hcms'; // can be "java" if you set $HCMS_CLASSPATH and have a contextual java 21 JRE
                         const isJava = defaultCommand.substring(defaultCommand.lastIndexOf('/') + 1).indexOf('java') >= 0;
                         const defaultOptions = [ // here you can add any configuration to launch the server
-                            ...(isJava ? ['-cp', process.env.HCMS_CLASSPATH, '-Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager'] : []),
+                            ...(isJava ? ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000', '-cp', process.env.HCMS_CLASSPATH, '-Djava.util.logging.manager=io.yupiik.logging.jul.YupiikLogManager'] : []),
+                            '-Djava.net.preferIPv4Stack=true',
+                            // random ports
                             `-Dfusion.http-server.port=${process.env.HCMS_PORT || '0'}`, // 0 means random port
                             `-Dfusion.observability.server.port=${process.env.HCMS_OBSERVABILITY_PORT || '0'}`,
+                            // model location - by default relative to pwd
                             `-Dhcms.modelLocation=${process.env.HCMS_MODEL || 'conf/model.json'}`,
+                            // default database
+                            `-Dhcms.database.driver=${process.env.HCMS_DATABASE_DRIVER || 'org.h2.Driver'}`,
                             `-Dhcms.database.url=${process.env.HCMS_DATABASE_URL || 'jdbc:h2:mem:hcms_test'}`,
                             `-Dhcms.database.username=${process.env.HCMS_DATABASE_USERNAME || 'sa'}`,
                             `-Dhcms.database.password=${process.env.HCMS_DATABASE_PASSWORD || ''}`,
+                            // default security if you need to login during tests
+                            '-Dhcms.security.privateKey=MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJVadEdJh+Gds6RtZZv937FJPS4XdYm3BMSSIiFFZPqeYwQeKiqGkEo65PFdeD7mmmPZo8tiZX43lN9cZiJgygLAGCknPuocSaf0/rpLdi78L+0XRTWIrY0y5tWMnNcD1bmEpWyl5x50FT6JW3etGfFfpQrAHSOkgd2R+V19FwjzAgMBAAECgYAR3hITxoUzWurMh1Xk6o33UfwNZpBmMEypY5N3stXuHEKw5xbuTXjiQyzJKgB3rfOBxzNkN9pNK5hrfEyvsi/tzgwjp9V8ApbmotiYViPLtiST3WILpApbNI6/dP0iM98t29RfXBrRaEWD709CreO5S11FWBkU+2a8+hyYz7GE2QJBALUQulTj5p2QeUDEuqBI+vOwvIOfngHExkt9n8UnHlbdWHCJib2QxHjiAVDb4DHYog5KT28eMT2acFItom9NX88CQQDTKfHMoEMWUS3zTVKRq9pidCGn/eRi33EC1wRlijs0u/t/uKbYdnmTAt1I8AXOe2FZeiQo5YfHSj15TGcNqwmdAkEAlx0m5cJurgHtsIh/2VYPW2Kdcpy8mm1HsaletoQ3ZffF3+Zp9rPjxZ+ZyYo4SmGqnpKWSP7BydAi/fLoJkxFMQJAaDKzaWjPkeyfAwbtroohqiFqFi5Xi158so0NU1mhm4UDNmQUmI3lseBg90PRabFCOVfnDfMtS+7bZMaJt5nllQJAaCcR5CoWgqEIHijv0PK0SjmlVRzU5lwRMMi636E6o/gNxnY9tav+GCK9phuTYyrW6BPtbDJvz2N4hVtyTWZW2Q==',
+                            '-Dhcms.security.kid=frisby',
+                            '-Dhcms.security.keys.length=1',
+                            '-Dhcms.security.keys.0.kid=frisby',
+                            '-Dhcms.security.keys.0.use=sig',
+                            '-Dhcms.security.keys.0.kty=RSA',
+                            '-Dhcms.security.keys.0.alg=RS256',
+                            '-Dhcms.security.keys.0.n=MTA0ODc5NDc5NzU2ODk3NjYyOTI0ODM4MjY5Njg4MDM3NjE4NDYxNDI2NDE0Mzg3NDk1ODYyODcwNDYxMzk2ODg3ODM4NDc0OTczNDgxMjE5MDA0NzkxNTM3NTMzNTgxODg5NDQ2NTQwODA3NzQwMjcyNTY0MDMzNDU0OTEwNTM3OTE3MTYyOTA3NTA0MTc0ODQxMDg4ODQ2MDYwNTExNzYzODUzNjE2MTA1MjYyMDYxNDYyMDk1NzQxODA4MjI5MjczNjk0MTYyMzYyODc4MjAyNjAzOTczOTg5NzkxMDg0MTc3MjQ5MDkxMzE5NzE2ODczMDk5Njk3ODQ4NzczMTMwNTA1NzU1MDE1NDM5MzA4ODc0ODk3NDI0OTkxODMyNzYzNDEyMjQ4MDI2MzAxMjcwMjU5',
+                            '-Dhcms.security.keys.0.e=NjU1Mzc=',
+                            '-Dhcms.security.keys.0.x5c=-----BEGIN PUBLIC KEY-----\\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCVWnRHSYfhnbOkbWWb/d+\\nxST0uF3WJtwTEkiIhRWT6nmMEHioqhpBKOuTxXXg+5ppj2aPLYmV+N5TfXG\\nYiYMoCwBgpJz7qHEmn9P66S3Yu/C/tF0U1iK2NMubVjJzXA9W5hKVspeced\\nBU+iVt3rRnxX6UKwB0jpIHdkfldfRcI8wIDAQAB\\n-----END PUBLIC KEY-----',
                             ...(isJava ? ['io.yupiik.fusion.framework.api.main.Launcher'] : []),
                         ];
+
+                        if (!process.env.HCMS_BINARY) {
+                            console.warn('HCMS_BINARY environment variable is not set, falling back on plain `hcms` but it is recommended to ensure it is explicitly set');
+                        }
 
                         module.exports = function setup() {
                             return new Promise((resolve, ko) => {
@@ -479,7 +564,11 @@ public class GenerateFrisbySkeleton implements Runnable {
                                 const server = spawn(defaultCommand, defaultOptions, { cwd: __dirname + '/..' });
                                 server.stdout.on('data', data => { onData(console.log, 'out', data); });
                                 server.stderr.on('data', data => { onData(console.log, 'err', data); });
-                                server.on('close', code => { if (code !== 0 && code !== 143 /* killed */) { if (!resolved) { ko(false); } console.log(`HCMS exited with status ${code}`); } });
+                                server.on('close', code => {
+                                    if (code !== 0 && code !== 143 /* killed */) {
+                                        if (!resolved) { ko(false); } console.log(`HCMS exited with status ${code}`);
+                                    }
+                                });
 
                                 // for teardown
                                 globalThis.HCMS_PID = server.pid;

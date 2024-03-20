@@ -56,7 +56,7 @@ public class SecurityHandler {
 
         final var requiredRoles = spec.roles();
 
-        if (spec.logged() && (requiredRoles == null || requiredRoles.isEmpty())) {
+        if (spec.logged() || requiredRoles == null || requiredRoles.isEmpty()) {
             return ctx -> {
                 loadJwt(ctx);
                 return impl.apply(ctx);
