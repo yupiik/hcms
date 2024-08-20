@@ -6,4 +6,4 @@ image::https://github.com/yupiik/hcms/actions/workflows/maven.yml/badge.svg?bran
 
 IMPORTANT: ensure to use maven >= 3.8 and Java >= 21.
 
-See https://www.github.io/hcms/
+See https://www.yupiik.io/hcms/
