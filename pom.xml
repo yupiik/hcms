@@ -80,12 +80,12 @@
 
   <properties>
     <!-- Main Dependencies -->
-    <junit5.version>5.10.2</junit5.version>
-    <yupiik-fusion.version>1.0.17</yupiik-fusion.version>
-    <yupiik-tools.version>1.2.1</yupiik-tools.version>
+    <junit5.version>5.11.3</junit5.version>
+    <yupiik-fusion.version>1.0.22</yupiik-fusion.version>
+    <yupiik-tools.version>1.2.5</yupiik-tools.version>
     <yupiik-bundlebee.version>1.0.26</yupiik-bundlebee.version>
-    <yupiik-logging.version>1.0.7</yupiik-logging.version>
-    <tomcat.version>10.1.20</tomcat.version>
+    <yupiik-logging.version>1.0.8</yupiik-logging.version>
+    <tomcat.version>10.1.34</tomcat.version>
 
     <!-- Image related configuration -->
     <image.base>azul/zulu-openjdk-alpine:21.0.1@sha256:d45f86fffd7ccd63839d0518f7aa69dd8c8e1703e2c9b6a62dabb813300946cd</image.base>
